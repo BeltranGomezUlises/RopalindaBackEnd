@@ -10,11 +10,16 @@ import javax.ws.rs.Path;
  * @author ulises
  */
 @Path("/prospectiveCustomers")
-public class ProspectiveCustomerController 
+public class ControllerProspectiveCustomer 
         extends Controller<ProspectiveCustomer, String> {
 
-    public ProspectiveCustomerController() {
+    public ControllerProspectiveCustomer() {
         super(new ModelProspectiveCustomer());
-    }    
+    }        
     
+    @Override
+    protected boolean persistRequiresToken() {
+        return false;
+    }    
+           
 }

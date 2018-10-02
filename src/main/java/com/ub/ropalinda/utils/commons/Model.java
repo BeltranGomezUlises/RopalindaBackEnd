@@ -1,6 +1,7 @@
 package com.ub.ropalinda.utils.commons;
 
 import com.ub.ropalinda.utils.UtilsDB;
+import com.ub.ropalinda.utils.commons.reponses.UniqueException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -87,16 +88,24 @@ public class Model<T extends IEntity<K>, K> {
      *
      * @param t entity to persist
      * @return the entity persisted
+     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a
+     * unique key is violated
      */
-    public T persist(T t) {
+    public T persist(T t) throws UniqueException {
         EntityManager em = this.createEm();
         try {
             em.getTransaction().begin();
+            t.setActive(true);
             em.persist(t);
             em.getTransaction().commit();
             return t;
         } catch (Exception e) {
+//            String exMessage = e.getMessage();
+//            if (exMessage.contains("Ya existe la llave")) {
+//                throw this.uniqueException(exMessage);
+//            } else {
             throw e;
+//            }
         } finally {
             em.close();
         }
@@ -106,15 +115,22 @@ public class Model<T extends IEntity<K>, K> {
      * Updates an entity in database
      *
      * @param t entity to update
+     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a
+     * unique key is violated
      */
-    public void update(T t) {
+    public void update(T t) throws UniqueException {
         EntityManager em = this.createEm();
         try {
             em.getTransaction().begin();
             em.merge(t); //merge in the persistence context
             em.getTransaction().commit();
         } catch (Exception e) {
+//            String exMessage = e.getMessage();
+//            if (exMessage.contains("Ya existe la llave")) {
+//                throw this.uniqueException(exMessage);
+//            } else {
             throw e;
+//            }
         } finally {
             em.close();
         }
@@ -192,7 +208,7 @@ public class Model<T extends IEntity<K>, K> {
         Set<String> querySelects = new LinkedHashSet<>();
         Set<String> queryWheres = new LinkedHashSet<>();
         Set<String> queryFroms = new LinkedHashSet<>();
-        String[] querySelections = select.split(",");        
+        String[] querySelections = select.split(",");
         for (String selection : querySelections) {
             String whereSelection = whereSelection(selection);
             if (whereSelection.isEmpty()) {
@@ -299,5 +315,25 @@ public class Model<T extends IEntity<K>, K> {
      */
     protected EntityManager createEm() {
         return UtilsDB.getEMFactoryCG().createEntityManager();
+    }
+
+    protected UniqueException uniqueException(String exMessage) {
+        int index = exMessage.indexOf("Detail:");
+        String newMessage = "";
+        for (int i = index; i < exMessage.length(); i++) {
+            char nextChar = exMessage.charAt(i);
+            if (nextChar == '.') {
+                break;
+            } else {
+                newMessage += nextChar;
+            }
+        }
+        //get field and value
+        String[] parts = newMessage.split("=");
+
+        String field = parts[0].split("(")[1];
+        String value = parts[1];
+
+        return new UniqueException(field, value, exMessage);
     }
 }

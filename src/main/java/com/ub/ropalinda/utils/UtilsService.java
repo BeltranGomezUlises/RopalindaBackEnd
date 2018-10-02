@@ -2,6 +2,10 @@ package com.ub.ropalinda.utils;
 
 import com.ub.ropalinda.utils.commons.enums.Status;
 import com.ub.ropalinda.utils.commons.reponses.Response;
+import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -18,6 +22,46 @@ public class UtilsService {
     public static final void invalidToken(Response res) {
         res.setStatus(Status.ACCESS_DENIED);
         res.setDevMessage("Inválid token");
+    }
+
+    /**
+     * Sets unique values to response
+     *
+     * @param res object to set values
+     * @param e unique exception with field and value
+     */
+    public static final void unique(Response res, UniqueException e) {
+        res.setStatus(Status.WARNING);
+        res.setMessage("Valor inválido");
+        res.setDevMessage(e.getMessage());
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("value", e.getValue());
+        metadata.put("field", e.getField());
+        res.setMetaData(metadata);
+    }
+
+    /**
+     * Sets invalid param exception values to response
+     *
+     * @param res object to set values
+     * @param e exception handled
+     */
+    public static final void invalidParam(Response res, InvalidParameterException e) {
+        res.setStatus(Status.INVALID_PARAM);
+        res.setMessage(e.getMessage());
+    }
+
+    /**
+     * Sets invalid param exception values to response
+     *
+     * @param res object to set values
+     * @param e exception handled
+     * @param message message to send to the final client
+     */
+    public static final void invalidParam(Response res, InvalidParameterException e, String message) {
+        res.setStatus(Status.INVALID_PARAM);
+        res.setDevMessage(e.getMessage());
+        res.setMessage(message);
     }
 
     /**
@@ -102,16 +146,16 @@ public class UtilsService {
         res.setMessage(message);
         res.setDevMessage(devMessage);
     }
-    
+
     /**
      * Sets ok value to response
      *
      * @param res object to set values
-     * @param data object data business    
+     * @param data object data business
      */
     public static final void ok(Response res, Object data) {
         res.setStatus(Status.OK);
-        res.setData(data);        
+        res.setData(data);
     }
 
     /**
@@ -164,7 +208,7 @@ public class UtilsService {
      * @param res object to set values
      * @param devMessage string message to developer
      */
-    public static final void okResponse(Response res, String devMessage) {
+    public static final void ok(Response res, String devMessage) {
         res.setStatus(Status.OK);
         res.setDevMessage(devMessage);
     }

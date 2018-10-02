@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.ub.ropalinda.entities;
 
 import com.ub.ropalinda.utils.commons.IEntity;
@@ -6,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,8 +25,8 @@ import javax.validation.constraints.Size;
  * @author ulises
  */
 @Entity
-@Table(name = "prospective_customer")
-public class ProspectiveCustomer extends IEntity<String> implements Serializable {    
+@Table(name = "customer")
+public class Customer extends IEntity<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,24 +63,32 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
     private Date birthday;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(name = "payment_method_allowed")
+    private PaymentMethod paymentMethodAllowed;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
     private boolean active;
 
-    public ProspectiveCustomer() {
+    public Customer() {
     }
 
-    public ProspectiveCustomer(String mail) {
+    public Customer(String mail) {
         this.mail = mail;
     }
 
-    public ProspectiveCustomer(String mail, String name, String fatherLastName, String motherLastName, String phone) {
+    public Customer(PaymentMethod paymentMethodAllowed, String mail, String pass, String name, String fatherLastName, String motherLastName, String phone, Date birthday, boolean active) {
+        this.paymentMethodAllowed = paymentMethodAllowed;
         this.mail = mail;
+        this.pass = pass;
         this.name = name;
         this.fatherLastName = fatherLastName;
         this.motherLastName = motherLastName;
         this.phone = phone;
+        this.birthday = birthday;
+        this.active = active;
     }
 
     public String getMail() {
@@ -82,6 +97,14 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getName() {
@@ -133,19 +156,16 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProspectiveCustomer)) {
+        if (!(object instanceof Customer)) {
             return false;
         }
-        ProspectiveCustomer other = (ProspectiveCustomer) object;
+        Customer other = (Customer) object;
         return this.mail.equals(other.mail);
     }
 
     @Override
     public String toString() {
-        return "ProspectiveCustomer{" + "mail=" + mail + ", name=" + name
-                + ", fatherLastName=" + fatherLastName + ", motherLastName="
-                + motherLastName + ", phone=" + phone + ", birthday=" + birthday + '}';
+        return "com.ub.ropalinda.entities.Customer[ mail=" + mail + " ]";
     }
 
     @Override
@@ -154,21 +174,39 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
     }
 
     @Override
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    @Override
     public boolean getActive() {
         return active;
     }
 
-    public String getPass() {
-        return pass;
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }    
+    public PaymentMethod getPaymentMethodAllowed() {
+        return paymentMethodAllowed;
+    }
+
+    public void setPaymentMethodAllowed(PaymentMethod paymentMethodAllowed) {
+        this.paymentMethodAllowed = paymentMethodAllowed;
+    }
+
+    /**
+     * especifie payment method for the customer
+     */
+    public static enum PaymentMethod {
+        /**
+         * only debit payments
+         */
+        DEBIT,
+        /**
+         * only credit payment
+         */
+        CREDIT,
+        /**
+         * both types of payments
+         */
+        BOTH
+    }
 
 }
