@@ -68,7 +68,8 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
         this.mail = mail;
     }
 
-    public ProspectiveCustomer(String mail, String name, String fatherLastName, String motherLastName, String phone) {
+    public ProspectiveCustomer(String mail, String name, String fatherLastName,
+            String motherLastName, String phone) {
         this.mail = mail;
         this.name = name;
         this.fatherLastName = fatherLastName;
@@ -133,7 +134,6 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof ProspectiveCustomer)) {
             return false;
         }

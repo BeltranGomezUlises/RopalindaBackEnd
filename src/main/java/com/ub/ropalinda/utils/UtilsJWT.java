@@ -58,8 +58,28 @@ public class UtilsJWT {
         }
     }
 
+    public static String getSubject(String token) throws AccessDeniedException {
+        try {
+            return Jwts.parser().setSigningKey(PUBLIC_KEY).parseClaimsJws(token).getBody().getSubject();
+        } catch (ExpiredJwtException | MalformedJwtException
+                | SignatureException | UnsupportedJwtException
+                | IllegalArgumentException | NullPointerException e) {
+            throw new AccessDeniedException();
+        }
+    }
+
+    public static String tokenWithData(String data) {
+        JwtBuilder builder = Jwts.builder();
+        builder.setSubject(data);
+        builder.setIssuer("auth system");
+        builder.setIssuedAt(new Date());
+        Date expDate = new Date(System.currentTimeMillis() + (1000 * 60 * 60));
+        builder.setExpiration(expDate);
+        return builder.signWith(SignatureAlgorithm.HS512, PUBLIC_KEY).compact();
+    }
+
     public static void main(String[] args) {
         System.out.println(token(1));
     }
-    
+
 }

@@ -5,7 +5,6 @@ import static com.ub.ropalinda.utils.UtilsService.*;
 import com.ub.ropalinda.utils.commons.reponses.AccessDeniedException;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
-import java.security.InvalidParameterException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -54,8 +53,6 @@ public class Controller<T extends IEntity<K>, K> {
             }
         } catch (AccessDeniedException e) {
             invalidToken(res);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -74,8 +71,6 @@ public class Controller<T extends IEntity<K>, K> {
             ok(res, this.model.findById(id));
         } catch (AccessDeniedException e) {
             invalidToken(res);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -95,8 +90,6 @@ public class Controller<T extends IEntity<K>, K> {
             invalidToken(res);
         } catch (UniqueException e) {
             unique(res, e);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -116,8 +109,6 @@ public class Controller<T extends IEntity<K>, K> {
             invalidToken(res);
         } catch (UniqueException e) {
             unique(res, e);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -135,8 +126,6 @@ public class Controller<T extends IEntity<K>, K> {
             this.model.delete(id);
         } catch (AccessDeniedException e) {
             invalidToken(res);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -154,8 +143,6 @@ public class Controller<T extends IEntity<K>, K> {
             ok(res, "Total entities", model.count());
         } catch (AccessDeniedException e) {
             invalidToken(res);
-        } catch (InvalidParameterException e) {
-            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }

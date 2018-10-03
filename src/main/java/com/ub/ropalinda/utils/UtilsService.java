@@ -3,6 +3,7 @@ package com.ub.ropalinda.utils;
 import com.ub.ropalinda.utils.commons.enums.Status;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +47,13 @@ public class UtilsService {
      * @param res object to set values
      * @param e exception handled
      */
-    public static final void invalidParam(Response res, InvalidParameterException e) {
+    public static final void invalidParam(Response res, InvalidValueException e) {
         res.setStatus(Status.INVALID_PARAM);
-        res.setMessage(e.getMessage());
+        if (e.getPropertyName() != null) {
+            res.setMessage(e.getMessage() + ": " + e.getPropertyName());
+        } else {
+            res.setMessage(e.getMessage());
+        }
     }
 
     /**
@@ -58,9 +63,14 @@ public class UtilsService {
      * @param e exception handled
      * @param message message to send to the final client
      */
-    public static final void invalidParam(Response res, InvalidParameterException e, String message) {
+    public static final void invalidParam(Response res, InvalidValueException e,
+            String message) {
         res.setStatus(Status.INVALID_PARAM);
-        res.setDevMessage(e.getMessage());
+        if (e.getPropertyName() != null) {
+            res.setDevMessage(e.getMessage() + ": " + e.getPropertyName());
+        } else {
+            res.setDevMessage(e.getMessage());
+        }
         res.setMessage(message);
     }
 

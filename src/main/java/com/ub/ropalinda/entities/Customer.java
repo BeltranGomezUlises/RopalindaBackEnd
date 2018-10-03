@@ -79,7 +79,9 @@ public class Customer extends IEntity<String> implements Serializable {
         this.mail = mail;
     }
 
-    public Customer(PaymentMethod paymentMethodAllowed, String mail, String pass, String name, String fatherLastName, String motherLastName, String phone, Date birthday, boolean active) {
+    public Customer(PaymentMethod paymentMethodAllowed, String mail, 
+            String pass, String name, String fatherLastName, 
+            String motherLastName, String phone, Date birthday, boolean active) {
         this.paymentMethodAllowed = paymentMethodAllowed;
         this.mail = mail;
         this.pass = pass;
