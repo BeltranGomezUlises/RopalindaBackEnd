@@ -7,7 +7,7 @@ package com.ub.ropalinda.utils.commons.reponses;
 
 /**
  *
- * @author ulises
+ * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 public class UniqueException extends Exception {
 

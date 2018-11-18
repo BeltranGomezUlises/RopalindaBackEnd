@@ -21,17 +21,18 @@ import javax.ws.rs.core.MediaType;
  * Base controller for all the entities of this proyect
  *
  * @author Ulises Beltrán Gómez --- beltrangomezulises@gmail.com
+ * @param <M> Model class to use
  * @param <T> Entity type
  * @param <K> Entity primary key type
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class Controller<T extends IEntity<K>, K> {
+public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
 
-    protected Model<T, K> model;
+    protected M model;
 
-    public Controller(Model<T, K> manager) {
-        this.model = manager;
+    public Controller(M model) {        
+        this.model = model;
     }
 
     @GET
@@ -39,8 +40,7 @@ public class Controller<T extends IEntity<K>, K> {
             @HeaderParam("Authorization") String token,
             @QueryParam("select") String select,
             @QueryParam("from") Integer from,
-            @QueryParam("to") Integer to
-    ) {
+            @QueryParam("to") Integer to) {
         Response res = new Response();
         try {
             if (this.findAllRequiresToken()) {
@@ -61,8 +61,7 @@ public class Controller<T extends IEntity<K>, K> {
 
     @POST
     @Path("/detail")
-    public Response<T> findById(
-            @HeaderParam("Authorization") String token, K id) {
+    public Response<T> findById(@HeaderParam("Authorization") String token, K id) {
         Response<T> res = new Response();
         try {
             if (this.findByRequiresToken()) {
@@ -78,8 +77,7 @@ public class Controller<T extends IEntity<K>, K> {
     }
 
     @POST
-    public Response<T> persist(
-            @HeaderParam("Authorization") String token, T t) {
+    public Response<T> persist(@HeaderParam("Authorization") String token, T t) {
         Response<T> res = new Response();
         try {
             if (this.persistRequiresToken()) {

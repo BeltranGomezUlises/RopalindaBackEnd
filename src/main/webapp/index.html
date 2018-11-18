@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-
-    <title>Format Admin</title>
-    <link rel="icon" href="favico.ico" type="image/gif">
-    <link rel="stylesheet" href="libs/semantic.min.css"></link>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/components/icon.min.css'>
-  </head>
-  <body>
-   <div id="app" style="height: inherit;"></div>
-   <h1>Ropa bien linda</h1>
-   <script src="index.js"></script>
-  </body>
+    <body>
+        <h1>File Upload with Jersey</h1>
+        <form action="api/utilities/upload" method="post" enctype="multipart/form-data">
+            <p>
+                Select a file : <input type="file" name="file" size="45" />
+            </p>
+            <input type="submit" value="Upload It" accept=".jpg,.jpeg,.png,.gif"/>
+        </form>
+    </body>
 </html>

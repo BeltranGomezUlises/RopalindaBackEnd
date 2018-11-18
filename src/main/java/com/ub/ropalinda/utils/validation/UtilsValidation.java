@@ -21,10 +21,6 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String PHONE_NUMBER_PATTERN = "^[0-9]*$";
     private static final String SPECIAL_CHARS = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
-    private static final String TIME24HOURS_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
-    private static final String TIME_HOURS_PATTERN = "([01]?[0-9]|[0-9][0-9]):[0-5][0-9]";
-    private static final String DATE = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
-    private static final String HAS_NUMBER = ".*\\d+.*";
 
     public static final void isEmail(String value) throws InvalidValueException {
         evaluate(EMAIL_PATTERN, value);

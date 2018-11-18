@@ -23,7 +23,7 @@ import javax.persistence.criteria.Root;
  */
 public class Model<T extends IEntity<K>, K> {
 
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     public Model(Class<T> clazz) {
         this.clazz = clazz;
