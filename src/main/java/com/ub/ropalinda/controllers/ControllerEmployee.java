@@ -17,16 +17,14 @@
  */
 package com.ub.ropalinda.controllers;
 
-import com.ub.ropalinda.utils.commons.Controller;
-import com.ub.ropalinda.entities.ProspectiveCustomer;
-import com.ub.ropalinda.models.ModelProspectiveCustomer;
+import com.ub.ropalinda.entities.Employee;
+import com.ub.ropalinda.models.ModelEmployee;
 import com.ub.ropalinda.utils.UtilsService;
 import static com.ub.ropalinda.utils.UtilsService.error;
-import static com.ub.ropalinda.utils.UtilsService.invalidParam;
-import static com.ub.ropalinda.utils.UtilsService.warning;
+import com.ub.ropalinda.utils.commons.Controller;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.validation.InvalidValueException;
-import java.util.HashMap;
+import java.util.Map;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -34,37 +32,24 @@ import javax.ws.rs.Path;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-@Path("/prospectiveCustomers")
-public class ControllerProspectiveCustomer extends Controller<ModelProspectiveCustomer, ProspectiveCustomer, String> {
+@Path("/employees")
+public class ControllerEmployee extends Controller<ModelEmployee, Employee, String> {
 
-    public ControllerProspectiveCustomer() {
-        super(new ModelProspectiveCustomer());
+    public ControllerEmployee() {
+        super(new ModelEmployee());
     }
 
+    @Path("/login")
     @POST
-    @Path("/request")
-    public Response customerRequest(ProspectiveCustomer req) {
-        Response res = new Response();
+    public Response<Map> login(Map<String, String> map) {
+        Response<Map> res = new Response();
         try {
-            model.validateProspective(req);
-            String token = model.customerRequest(req);
-            res.setData(token);
+            String mail = map.get("mail");
+            String pass = map.get("pass");                        
+            Map<String, Object> data = this.model.login(mail, pass);            
+            res.setData(data);                        
         } catch (InvalidValueException e) {
-            invalidParam(res, e);
-        } catch (Exception e) {
-            error(res, e);        
-        } 
-        return res;
-    }
-
-    @POST
-    @Path("/activate")
-    public Response customerRequest(HashMap<String, String> req) {
-        Response res = new Response();
-        try {                     
-            model.customerActivation(req.get("token"), req.get("code"));            
-        } catch (InvalidValueException e) {
-            warning(res, e.getMessage(), null);
+            UtilsService.invalidParam(res, e, e.getMessage());        
         } catch (Exception e) {
             error(res, e);
         }

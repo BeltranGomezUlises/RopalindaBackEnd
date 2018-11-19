@@ -97,8 +97,7 @@ public class UtilsService {
      * @param message string message to final client
      * @param devMessage string message to developer
      */
-    public static final void warning(Response res, String message,
-            String devMessage) {
+    public static final void warning(Response res, String message, String devMessage) {
         res.setStatus(Status.WARNING);
         res.setMessage(message);
         res.setDevMessage(devMessage);

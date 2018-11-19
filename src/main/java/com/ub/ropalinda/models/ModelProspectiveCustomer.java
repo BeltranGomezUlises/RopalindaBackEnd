@@ -32,8 +32,6 @@ import static com.ub.ropalinda.utils.validation.UtilsValidation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.mail.EmailException;
 
 /**
@@ -81,17 +79,14 @@ public class ModelProspectiveCustomer
      * @throws JsonProcessingException
      */
     public String customerRequest(ProspectiveCustomer req)
-            throws JsonProcessingException {
+            throws JsonProcessingException, EmailException, MalformedURLException {
         String code = UUID.randomUUID().toString().substring(0, 10);
         ModelSendActivationCode msac = new UtilsMail.ModelSendActivationCode(req, code);
         String token = UtilsJWT.tokenWithData(UtilsJson.write(msac));
-        try {
-            UtilsMail.sendActivationCode("smtp.googlemail.com", 465,
-                    "ubg700@gmail.com", ".toString(24);", "ubg700@gmail.com",
-                    req.getMail(), code);
-        } catch (EmailException | MalformedURLException ex) {
-            Logger.getLogger(ModelProspectiveCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UtilsMail.sendActivationCode("smtp.googlemail.com", 465,
+                "ubg700@gmail.com", "toString24", "ubg700@gmail.com",
+                req.getMail(), code);
+
         return token;
     }
 

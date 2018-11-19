@@ -41,9 +41,9 @@ public class UtilsJWT {
      * @param userId id of the user requesting token
      * @return Access JWT as string
      */
-    public static String token(final int userId) {
+    public static String token(String userId) {
         JwtBuilder builder = Jwts.builder();
-        builder.setSubject(String.valueOf(userId));
+        builder.setSubject(userId);
         builder.setIssuer("auth system");
         builder.setIssuedAt(new Date());
         Date expDate = new Date(System.currentTimeMillis() + (1000 * 60 * 60));
