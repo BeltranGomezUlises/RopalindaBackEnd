@@ -18,6 +18,7 @@
 package com.ub.ropalinda.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ub.ropalinda.entities.Customer;
 import com.ub.ropalinda.entities.ProspectiveCustomer;
 import com.ub.ropalinda.utils.UtilsJWT;
 import com.ub.ropalinda.utils.UtilsJson;
@@ -32,6 +33,7 @@ import static com.ub.ropalinda.utils.validation.UtilsValidation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
+import javax.persistence.EntityManager;
 import org.apache.commons.mail.EmailException;
 
 /**
@@ -68,6 +70,11 @@ public class ModelProspectiveCustomer
                 throw new InvalidValueException("Usted fué rechazado para "
                         + "ser cliente de Ropalinda, lo sentimos");
             }
+        }
+        
+        Customer customer = this.createEm().find(Customer.class, t.getMail());
+        if (customer != null) {
+            throw new InvalidValueException("Usted ya tiene una cuenta");
         }
     }
 
@@ -111,6 +118,31 @@ public class ModelProspectiveCustomer
         } else {
             throw new InvalidValueException("El código no es correcto");
         }
+    }
+
+    public void reject(String email) throws InvalidValueException, UniqueException {
+        UtilsValidation.isEmailAndNotNull(email);
+        ProspectiveCustomer pc = this.findById(email);
+        if (pc == null) {
+            throw new InvalidValueException("No existe el cliente prospecto");
+        }
+        pc.setActive(false);
+        this.update(pc);        
+    }
+
+    public void accept(String email) throws InvalidValueException, UniqueException {
+        UtilsValidation.isEmailAndNotNull(email);
+        EntityManager em = this.createEm();
+        ProspectiveCustomer pc = em.find(ProspectiveCustomer.class, email);
+        if (pc == null) {
+            throw new InvalidValueException("No existe el cliente prospecto");
+        }
+        Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);        
+                
+        em.getTransaction().begin();
+        em.persist(c);
+        em.remove(pc);                
+        em.getTransaction().commit();                                
     }
 
 }

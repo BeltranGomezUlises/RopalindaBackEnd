@@ -74,11 +74,7 @@ public class Customer extends IEntity<String> implements Serializable {
     private String phone;
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
-    private Date birthday;
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(name = "payment_method_allowed")
-    private PaymentMethod paymentMethodAllowed;
+    private Date birthday;    
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
@@ -91,10 +87,7 @@ public class Customer extends IEntity<String> implements Serializable {
         this.mail = mail;
     }
 
-    public Customer(PaymentMethod paymentMethodAllowed, String mail, 
-            String pass, String name, String fatherLastName, 
-            String motherLastName, String phone, Date birthday, boolean active) {
-        this.paymentMethodAllowed = paymentMethodAllowed;
+    public Customer(String mail, String pass, String name, String fatherLastName, String motherLastName, String phone, Date birthday, boolean active) {
         this.mail = mail;
         this.pass = pass;
         this.name = name;
@@ -195,32 +188,6 @@ public class Customer extends IEntity<String> implements Serializable {
     @Override
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public PaymentMethod getPaymentMethodAllowed() {
-        return paymentMethodAllowed;
-    }
-
-    public void setPaymentMethodAllowed(PaymentMethod paymentMethodAllowed) {
-        this.paymentMethodAllowed = paymentMethodAllowed;
-    }
-
-    /**
-     * especifie payment method for the customer
-     */
-    public static enum PaymentMethod {
-        /**
-         * only debit payments
-         */
-        DEBIT,
-        /**
-         * only credit payment
-         */
-        CREDIT,
-        /**
-         * both types of payments
-         */
-        BOTH
-    }
+    }  
 
 }

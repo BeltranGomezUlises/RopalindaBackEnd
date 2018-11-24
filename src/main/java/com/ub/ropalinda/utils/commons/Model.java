@@ -62,14 +62,11 @@ public class Model<T extends IEntity<K>, K> {
      * @param to index to end pagination
      * @return list of mapped properties
      */
-    public List<Map<String, Object>> findAll(String select, Integer from, Integer to) {
-        EntityManager em = UtilsDB.getEMFactoryCG().createEntityManager();
+    public List<Map<String, Object>> findAll(String select, Integer from, Integer to) {        
         try {
             return queryParamResponse(select, from, to);
         } catch (Exception e) {
             throw e;
-        } finally {
-            em.close();
         }
     }
 

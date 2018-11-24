@@ -38,6 +38,12 @@ import javax.validation.constraints.Size;
 @Table(name = "prospective_customer")
 public class ProspectiveCustomer extends IEntity<String> implements Serializable {    
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 13)
+    @Column(name = "rfc")
+    private String rfc;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -187,5 +193,13 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
     public void setPass(String pass) {
         this.pass = pass;
     }    
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
 
 }

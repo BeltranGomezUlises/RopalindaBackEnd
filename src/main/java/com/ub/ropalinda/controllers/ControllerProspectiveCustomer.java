@@ -20,14 +20,19 @@ package com.ub.ropalinda.controllers;
 import com.ub.ropalinda.utils.commons.Controller;
 import com.ub.ropalinda.entities.ProspectiveCustomer;
 import com.ub.ropalinda.models.ModelProspectiveCustomer;
-import com.ub.ropalinda.utils.UtilsService;
+import com.ub.ropalinda.utils.UtilsJWT;
 import static com.ub.ropalinda.utils.UtilsService.error;
 import static com.ub.ropalinda.utils.UtilsService.invalidParam;
+import static com.ub.ropalinda.utils.UtilsService.invalidToken;
 import static com.ub.ropalinda.utils.UtilsService.warning;
+import com.ub.ropalinda.utils.commons.reponses.AccessDeniedException;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.validation.InvalidValueException;
 import java.util.HashMap;
+import java.util.Map;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
 /**
@@ -68,6 +73,42 @@ public class ControllerProspectiveCustomer extends Controller<ModelProspectiveCu
         } catch (Exception e) {
             error(res, e);
         }
+        return res;
+    }
+    
+    @PUT
+    @Path("/reject")
+    public Response<Boolean> reject(@HeaderParam("Authorization") String token, 
+            Map<String, String> body){
+        Response<Boolean> res = new Response<>();        
+        try {                     
+            UtilsJWT.validate(token);
+            model.reject(body.get("mail"));            
+        } catch (InvalidValueException e) {
+            warning(res, e.getMessage(), null);
+        }catch (AccessDeniedException e) {
+            invalidToken(res);
+        } catch (Exception e) {
+            error(res, e);
+        }        
+        return res;
+    }
+    
+    @POST
+    @Path("/accept")
+    public Response<Boolean> accept(@HeaderParam("Authorization") String token, 
+            Map<String, String> body){
+        Response<Boolean> res = new Response<>();        
+        try {                     
+            UtilsJWT.validate(token);
+            model.accept(body.get("mail"));            
+        } catch (InvalidValueException e) {
+            warning(res, e.getMessage(), null);
+        }catch (AccessDeniedException e) {
+            invalidToken(res);
+        } catch (Exception e) {
+            error(res, e);
+        }        
         return res;
     }
 
