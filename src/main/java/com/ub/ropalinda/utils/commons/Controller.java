@@ -96,8 +96,7 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
     }
 
     @PUT
-    public Response<T> update(
-            @HeaderParam("Authorization") String token, T t) {
+    public Response<T> update(@HeaderParam("Authorization") String token, T t) {
         Response res = new Response();
         try {
             if (this.updateRequiresToken()) {
@@ -115,8 +114,8 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
     }
 
     @DELETE
-    public Response<T> delete(
-            @HeaderParam("Authorization") String token, K id) throws Exception {
+    @Path("/{id}")
+    public Response<T> delete(@HeaderParam("Authorization") String token, @PathParam("id") K id) throws Exception {
         Response res = new Response();
         try {
             if (this.deleteRequiresToken()) {

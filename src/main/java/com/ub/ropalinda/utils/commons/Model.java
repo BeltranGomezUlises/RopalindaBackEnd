@@ -54,15 +54,14 @@ public class Model<T extends IEntity<K>, K> {
     }
 
     /**
-     * Find all the entities of this model filtered and related with the params
-     * in queryParam
+     * Find all the entities of this model filtered and related with the params in queryParam
      *
      * @param select the query param from the uri
      * @param from index to start pagination
      * @param to index to end pagination
      * @return list of mapped properties
      */
-    public List<Map<String, Object>> findAll(String select, Integer from, Integer to) {        
+    public List<Map<String, Object>> findAll(String select, Integer from, Integer to) {
         try {
             return queryParamResponse(select, from, to);
         } catch (Exception e) {
@@ -85,8 +84,7 @@ public class Model<T extends IEntity<K>, K> {
      *
      * @param t entity to persist
      * @return the entity persisted
-     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a
-     * unique key is violated
+     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a unique key is violated
      */
     public T persist(T t) throws UniqueException {
         EntityManager em = this.createEm();
@@ -112,8 +110,7 @@ public class Model<T extends IEntity<K>, K> {
      * Updates an entity in database
      *
      * @param t entity to update
-     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a
-     * unique key is violated
+     * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a unique key is violated
      */
     public void update(T t) throws UniqueException {
         EntityManager em = this.createEm();
@@ -190,8 +187,7 @@ public class Model<T extends IEntity<K>, K> {
     }
 
     /**
-     * Creates de result set mapped as a generic list from the query string
-     * provided
+     * Creates de result set mapped as a generic list from the query string provided
      *
      * @param select contains the columns and filters
      * @param from pagination index from
@@ -217,9 +213,15 @@ public class Model<T extends IEntity<K>, K> {
                     querySelects.add("t." + selectionParts[0]);
                     queryWheres.add("t." + selectionParts[0] + " BETWEEN " + values[0] + " AND " + values[1]);
                 } else {
-                    String[] selectionParts = selection.split(whereSelection);
-                    querySelects.add("t." + selectionParts[0]);
-                    queryWheres.add("t." + selectionParts[0] + " " + whereSelection + " " + selectionParts[1]);
+                    if (whereSelection.equals("%")) {
+                        String[] selectionParts = selection.split(whereSelection);
+                        querySelects.add("t." + selectionParts[0]);
+                        queryWheres.add("t." + selectionParts[0] + " LIKE CONCAT(" + selectionParts[1] + ",'%')");
+                    } else {
+                        String[] selectionParts = selection.split(whereSelection);
+                        querySelects.add("t." + selectionParts[0]);
+                        queryWheres.add("t." + selectionParts[0] + " " + whereSelection + " " + selectionParts[1]);
+                    }
                 }
             }
         }
@@ -261,6 +263,9 @@ public class Model<T extends IEntity<K>, K> {
      * @return the operator to use in the where clause like '=' or '!='
      */
     protected String whereSelection(String selection) {
+        if (selection.contains("%")) {
+            return "%";
+        }
         if (selection.contains(">=")) {
             return ">=";
         }
@@ -290,8 +295,7 @@ public class Model<T extends IEntity<K>, K> {
      *
      * @param resultSet result set from a native query
      * @param columnsNames columns names in the correct order to map
-     * @return list with a map of the properties in the columns of the result
-     * set
+     * @return list with a map of the properties in the columns of the result set
      */
     public static List<Map> resultSetMap(List<Object[]> resultSet, String... columnsNames) {
         List<Map> mappedResults = new ArrayList<>();
