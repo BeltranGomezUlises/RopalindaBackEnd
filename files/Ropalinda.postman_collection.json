@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "abb7c4b6-e553-495f-b104-5828f200a3be",
+		"name": "Ropalinda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "7329637d-850b-4ac5-bc09-90acf7483fc6",
+			"name": "prospectiveCustomers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.kJdFAfN1eP6-4vEjv0lTRVsmj4L3RAJ60nl3vJFAfoLAK5tSkf-Qh-B8lyerGnA9oFnQIlVrEXj9xrYV6RKzLQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"prospectiveCustomers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "e24361b5-3282-4c10-acbe-a91bcb928d3f",
+			"name": "customers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.kJdFAfN1eP6-4vEjv0lTRVsmj4L3RAJ60nl3vJFAfoLAK5tSkf-Qh-B8lyerGnA9oFnQIlVrEXj9xrYV6RKzLQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "f2400dbe-67b0-4fac-9222-f974ef8b9873",
+			"name": "employees",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.kJdFAfN1eP6-4vEjv0lTRVsmj4L3RAJ60nl3vJFAfoLAK5tSkf-Qh-B8lyerGnA9oFnQIlVrEXj9xrYV6RKzLQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "dcc93dd5-2834-4904-8b14-6ba50833d057",
+			"name": "compatibleGarments",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.kJdFAfN1eP6-4vEjv0lTRVsmj4L3RAJ60nl3vJFAfoLAK5tSkf-Qh-B8lyerGnA9oFnQIlVrEXj9xrYV6RKzLQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"cuello\",\n    \"description\": \"cuello V\",\n    \"previewImage\": \"/previews/123498.jpg\",\n    \"image\": \"/compatible_garments/123498.jpg\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/compatibleGarments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"compatibleGarments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a3e3e0c8-a6aa-4141-a041-74cf2206f95d",
+			"name": "prospectiveCustomers/request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIn0.kJdFAfN1eP6-4vEjv0lTRVsmj4L3RAJ60nl3vJFAfoLAK5tSkf-Qh-B8lyerGnA9oFnQIlVrEXj9xrYV6RKzLQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mail\": \"ubg700@gmail.com\",\n    \"name\": \"Ulises\",\n    \"pass\":\"1234\",\n    \"fatherLastName\": \"Beltrán\",\n    \"motherLastName\": \"Gómez\",\n    \"phone\": \"6672154896\",\n    \"birthday\": \"1996-02-24T00:00:00.00Z\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers/request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"prospectiveCustomers",
+						"request"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "f1e90f26-decc-4a0c-943f-08bc9c5f96e6",
+			"name": "prospectiveCustomers/activate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJwcm9zXCI6e1wibWFpbFwiOlwidWJnNzAwQGdtYWlsLmNvbVwiLFwicGFzc1wiOlwiMTIzNFwiLFwibmFtZVwiOlwiVWxpc2VzXCIsXCJmYXRoZXJMYXN0TmFtZVwiOlwiQmVsdHLDoW5cIixcIm1vdGhlckxhc3ROYW1lXCI6XCJHw7NtZXpcIixcInBob25lXCI6XCI2NjcyMTU0ODk2XCIsXCJiaXJ0aGRheVwiOjgyNTEyMDAwMDAwMCxcImFjdGl2ZVwiOmZhbHNlfSxcImNvZGVcIjpcIjg5OGMyZDM0LTFcIn0iLCJpc3MiOiJhdXRoIHN5c3RlbSIsImlhdCI6MTU0MjU3NDQ2OCwiZXhwIjoxNTQyNTc4MDY4fQ.OsTpjxjzEJgbN5QMWbiaq5vnh7Zz6UN-y5w-eRDwrx-zmaXkWkzDYdUDCJa21BO-bm4YF11EhwURJIPN3Q0hzw\",\n    \"code\": \"898c2d34-1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"prospectiveCustomers",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "7d8b8e7b-73b6-4e9f-a2a8-3b359024a88b",
+			"name": "prospectiveCustomers/accept",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"correo\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"prospectiveCustomers",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "8df7210e-650a-4a3e-b70f-c916d7c9362d",
+			"name": "prospectiveCustomers/reject",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"correo\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers/reject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"prospectiveCustomers",
+						"reject"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "cd33b7b6-a8c7-4a13-b014-a74dabec6eaf",
+			"name": "employees/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mail\": \"beltrangomezulises@gmail.com\",\n    \"pass\": \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8084/Ropalinda/api/employees/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"Ropalinda",
+						"api",
+						"employees",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
