@@ -19,6 +19,7 @@ package com.ub.ropalinda.entities;
 
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +47,12 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "CompatibleGarment.findByImage", query = "SELECT c FROM CompatibleGarment c WHERE c.image = :image")
     , @NamedQuery(name = "CompatibleGarment.findByActive", query = "SELECT c FROM CompatibleGarment c WHERE c.active = :active")})
 public class CompatibleGarment extends IEntity<Integer> implements Serializable {
+
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "price")
+    private BigDecimal price;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -170,6 +177,14 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
     @Override
     public Integer objectPK() {
         return id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
     
 }

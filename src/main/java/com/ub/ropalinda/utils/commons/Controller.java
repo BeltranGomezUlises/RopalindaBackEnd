@@ -13,6 +13,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -59,9 +60,9 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
         return res;
     }
 
-    @POST
-    @Path("/detail")
-    public Response<T> findById(@HeaderParam("Authorization") String token, K id) {
+    @GET
+    @Path("/{id}")
+    public Response<T> findById(@HeaderParam("Authorization") String token, @PathParam("id") K id) {
         Response<T> res = new Response();
         try {
             if (this.findByRequiresToken()) {
