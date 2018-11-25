@@ -1,11 +1,12 @@
 {
 	"info": {
-		"_postman_id": "029f19fd-6a51-4593-ad46-ce9146d1eba2",
+		"_postman_id": "abb7c4b6-e553-495f-b104-5828f200a3be",
 		"name": "Ropalinda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"_postman_id": "e47d3940-cfc1-4ea2-aa2e-2c6fe54d9dd1",
 			"name": "prospectiveCustomers",
 			"request": {
 				"method": "GET",
@@ -21,7 +22,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8084/Ropalinda/api/prospectiveCustomers",
@@ -40,6 +41,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "d991032b-ca8b-41dd-b585-ea2cbdb654fa",
 			"name": "customers",
 			"request": {
 				"method": "GET",
@@ -55,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8084/Ropalinda/api/customers",
@@ -74,6 +76,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "8e29d65b-de40-48db-8c2b-3b80d108a7bd",
 			"name": "employees",
 			"request": {
 				"method": "GET",
@@ -89,7 +92,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"mail\": \"beltrangomezulise@gmail.com\",\n    \"pass\": \"KASFDI\\\"#DKNDSFJ\\\"#ISND\",\n    \"name\": \"ulises\",\n    \"fatherLastName\": \"betran\",\n    \"motherLastName\": \"gomez\",\n    \"phone\": \"6672118538\",\n    \"birthday\": 825145200000,\n    \"paymentMethod\": 1,\n    \"active\": true\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8084/Ropalinda/api/employees",
@@ -108,6 +111,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "d86e5b1e-51b4-4935-a729-ff05f6891e02",
 			"name": "compatibleGarments",
 			"request": {
 				"method": "GET",
@@ -123,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"name\": \"cuello\",\n    \"description\": \"cuello V\",\n    \"previewImage\": \"/previews/123498.jpg\",\n    \"image\": \"/compatible_garments/123498.jpg\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8084/Ropalinda/api/compatibleGarments",
@@ -142,6 +146,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "c47decc0-60f6-4790-9763-ef01b8b630c7",
 			"name": "prospectiveCustomers/request",
 			"request": {
 				"method": "POST",
@@ -177,6 +182,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "0c1d5d45-2edf-40bc-b15b-a89271cb40cf",
 			"name": "prospectiveCustomers/activate",
 			"request": {
 				"method": "POST",
@@ -208,6 +214,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "3380d47c-0337-4fc4-acca-219744b1bdfd",
 			"name": "prospectiveCustomers/accept",
 			"request": {
 				"method": "POST",
@@ -239,6 +246,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "bb5db5fd-2c16-4fb0-9c4c-5919caaac840",
 			"name": "prospectiveCustomers/reject",
 			"request": {
 				"method": "PUT",
@@ -270,6 +278,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "2d905255-fb3a-4a4c-a6bc-42bac1c5576a",
 			"name": "employees/login",
 			"request": {
 				"method": "POST",
@@ -436,7 +445,8 @@
 					"path": [
 						"Ropalinda",
 						"api",
-						"categories"
+						"employees",
+						"login"
 					]
 				}
 			},
