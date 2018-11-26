@@ -24,8 +24,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,6 +40,11 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")})
 public class Employee extends IEntity<String> implements Serializable {
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "employee_type")
+    private int employeeType;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,11 +77,6 @@ public class Employee extends IEntity<String> implements Serializable {
     private String phone;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "employee_type")
-    @Enumerated(EnumType.ORDINAL)
-    private EmployeeType employeeType;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
 
@@ -89,7 +87,7 @@ public class Employee extends IEntity<String> implements Serializable {
         this.mail = mail;
     }
 
-    public Employee(String mail, String pass, String name, String fullName, String phone, EmployeeType employeeType, boolean active) {
+    public Employee(String mail, String pass, String name, String fullName, String phone, int employeeType, boolean active) {
         this.mail = mail;
         this.pass = pass;
         this.name = name;
@@ -139,11 +137,11 @@ public class Employee extends IEntity<String> implements Serializable {
         this.phone = phone;
     }
 
-    public EmployeeType getEmployeeType() {
+    public int getEmployeeType() {
         return employeeType;
     }
 
-    public void setEmployeeType(EmployeeType employeeType) {
+    public void setEmployeeType(int employeeType) {
         this.employeeType = employeeType;
     }
 
@@ -180,10 +178,6 @@ public class Employee extends IEntity<String> implements Serializable {
     @Override
     public String objectPK() {
         return this.mail;
-    }
-
-    public static enum EmployeeType {
-        ADMIN, DESIGN;        
     }
 
 }

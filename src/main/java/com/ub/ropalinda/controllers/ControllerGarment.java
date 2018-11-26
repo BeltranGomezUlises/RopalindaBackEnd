@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 valle
+ * Copyright (C) 2018 Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,28 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package com.ub.ropalinda.models;
+package com.ub.ropalinda.controllers;
 
-import com.ub.ropalinda.entities.Category;
-import com.ub.ropalinda.entities.Subcategory;
-import com.ub.ropalinda.utils.commons.Model;
-import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.entities.Garment;
+import com.ub.ropalinda.models.ModelGarment;
+import com.ub.ropalinda.utils.commons.Controller;
+import javax.ws.rs.Path;
 
 /**
  *
- * @author valle
+ * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelSubcategory extends Model<Subcategory, Integer> {
-
-    public ModelSubcategory() {
-        super(Subcategory.class);
+@Path("/garments")
+public class ControllerGarment extends Controller<ModelGarment, Garment, Integer>{
+    
+    public ControllerGarment() {
+        super(new ModelGarment());
     }
-
-    @Override
-    public Subcategory persist(Subcategory t) throws UniqueException {
-        Category cat = this.createEm().find(Category.class, t.getCategory().getId());
-        t.setCategory(cat);
-        return super.persist(t);
-    }
-
+    
 }

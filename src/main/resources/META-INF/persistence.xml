@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="ropalinda" transaction-type="RESOURCE_LOCAL">
-    <class>com.ub.ropalinda.entities.ProspectiveCustomer</class>
-    <class>com.ub.ropalinda.entities.Customer</class>
-    <class>com.ub.ropalinda.entities.Employee</class>
-    <class>com.ub.ropalinda.entities.CompatibleGarment</class>
-    <class>com.ub.ropalinda.entities.Category</class>
-    <class>com.ub.ropalinda.entities.Subcategory</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    <properties>
-      <!-- jdbc -->
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ropalinda"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
-      <property name="javax.persistence.jdbc.password" value="1234"/>
-    </properties>
-  </persistence-unit>
+    <persistence-unit name="ropalinda" transaction-type="RESOURCE_LOCAL">
+        <class>com.ub.ropalinda.entities.ProspectiveCustomer</class>
+        <class>com.ub.ropalinda.entities.Customer</class>
+        <class>com.ub.ropalinda.entities.Employee</class>
+        <class>com.ub.ropalinda.entities.CompatibleGarment</class>
+        <class>com.ub.ropalinda.entities.Category</class>
+        <class>com.ub.ropalinda.entities.Subcategory</class>
+        <class>com.ub.ropalinda.entities.Garment</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <!-- jdbc -->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ropalinda"/>
+            <!-- server auth-->
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value=".toString(24);"/>
+      
+      
+            <!-- local auth -->
+            <!--      <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="2424"/>-->
+      
+      
+        </properties>
+    </persistence-unit>
 </persistence>

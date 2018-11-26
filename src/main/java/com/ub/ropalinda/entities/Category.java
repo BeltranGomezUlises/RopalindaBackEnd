@@ -25,6 +25,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Category.findByActive", query = "SELECT c FROM Category c WHERE c.active = :active")})
 public class Category extends IEntity<Integer> implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.EAGER)
     private List<Subcategory> subcategoryCollection;
 
     private static final long serialVersionUID = 1L;

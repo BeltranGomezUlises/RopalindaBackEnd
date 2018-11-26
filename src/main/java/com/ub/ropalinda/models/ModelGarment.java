@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 valle
+ * Copyright (C) 2018 Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,26 +17,38 @@
  */
 package com.ub.ropalinda.models;
 
-import com.ub.ropalinda.entities.Category;
+import com.ub.ropalinda.entities.Garment;
 import com.ub.ropalinda.entities.Subcategory;
 import com.ub.ropalinda.utils.commons.Model;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
 
 /**
  *
- * @author valle
+ * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelSubcategory extends Model<Subcategory, Integer> {
-
-    public ModelSubcategory() {
-        super(Subcategory.class);
+public class ModelGarment extends Model<Garment, Integer>{
+    
+    public ModelGarment() {
+        super(Garment.class);
     }
 
     @Override
-    public Subcategory persist(Subcategory t) throws UniqueException {
-        Category cat = this.createEm().find(Category.class, t.getCategory().getId());
-        t.setCategory(cat);
-        return super.persist(t);
+    public Garment persist(Garment t) throws UniqueException {
+        Subcategory subCat = this.createEm().find(Subcategory.class, t.getSubcategory().getId());
+        t.setSubcategory(subCat);
+        return super.persist(t); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void update(Garment t) throws UniqueException {
+        Subcategory subCat = this.createEm().find(Subcategory.class, t.getSubcategory().getId());
+        t.setSubcategory(subCat);
+        super.update(t); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    
+    
 }

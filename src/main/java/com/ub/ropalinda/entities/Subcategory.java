@@ -17,9 +17,12 @@
  */
 package com.ub.ropalinda.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +32,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,6 +50,10 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Subcategory.findByIcon", query = "SELECT s FROM Subcategory s WHERE s.icon = :icon")
     , @NamedQuery(name = "Subcategory.findByActive", query = "SELECT s FROM Subcategory s WHERE s.active = :active")})
 public class Subcategory extends IEntity<Integer> implements Serializable {
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subcategory")
+    private List<Garment> garmentList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,7 +74,8 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
-    private boolean active;
+    private boolean active;    
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "category", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category category;
@@ -116,7 +125,7 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
-
+    
     public Category getCategory() {
         return category;
     }
@@ -153,6 +162,14 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     @Override
     public Integer objectPK() {
         return id;
+    }
+
+    public List<Garment> getGarmentList() {
+        return garmentList;
+    }
+
+    public void setGarmentList(List<Garment> garmentList) {
+        this.garmentList = garmentList;
     }
     
 }

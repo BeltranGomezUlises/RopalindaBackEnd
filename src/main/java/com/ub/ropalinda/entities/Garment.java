@@ -29,8 +29,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -44,30 +44,21 @@ import javax.validation.constraints.Size;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Entity
-@Table(name = "compatible_garment")
+@Table(name = "garment")
 @NamedQueries({
-    @NamedQuery(name = "CompatibleGarment.findAll", query = "SELECT c FROM CompatibleGarment c")
-    , @NamedQuery(name = "CompatibleGarment.findById", query = "SELECT c FROM CompatibleGarment c WHERE c.id = :id")
-    , @NamedQuery(name = "CompatibleGarment.findByName", query = "SELECT c FROM CompatibleGarment c WHERE c.name = :name")
-    , @NamedQuery(name = "CompatibleGarment.findByDescription", query = "SELECT c FROM CompatibleGarment c WHERE c.description = :description")
-    , @NamedQuery(name = "CompatibleGarment.findByPreviewImage", query = "SELECT c FROM CompatibleGarment c WHERE c.previewImage = :previewImage")
-    , @NamedQuery(name = "CompatibleGarment.findByImage", query = "SELECT c FROM CompatibleGarment c WHERE c.image = :image")
-    , @NamedQuery(name = "CompatibleGarment.findByActive", query = "SELECT c FROM CompatibleGarment c WHERE c.active = :active")})
-public class CompatibleGarment extends IEntity<Integer> implements Serializable {
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JoinTable(name = "garmet_compatible_garment", joinColumns = {
-        @JoinColumn(name = "compatible_garment", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "garment", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Garment> garmentList;
-
-    @Max(value = 9999)
-    @Min(value = 0)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "price")
-    private BigDecimal price;
+    @NamedQuery(name = "Garment.findAll", query = "SELECT g FROM Garment g")
+    , @NamedQuery(name = "Garment.findById", query = "SELECT g FROM Garment g WHERE g.id = :id")
+    , @NamedQuery(name = "Garment.findByName", query = "SELECT g FROM Garment g WHERE g.name = :name")
+    , @NamedQuery(name = "Garment.findByDescription", query = "SELECT g FROM Garment g WHERE g.description = :description")
+    , @NamedQuery(name = "Garment.findByPreviewImage", query = "SELECT g FROM Garment g WHERE g.previewImage = :previewImage")
+    , @NamedQuery(name = "Garment.findByImage", query = "SELECT g FROM Garment g WHERE g.image = :image")
+    , @NamedQuery(name = "Garment.findByActive", query = "SELECT g FROM Garment g WHERE g.active = :active")
+    , @NamedQuery(name = "Garment.findByPrice", query = "SELECT g FROM Garment g WHERE g.price = :price")})
+public class Garment extends IEntity<Integer> implements Serializable {
+    
+    @JoinColumn(name = "subcategory", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Subcategory subcategory;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -99,21 +90,30 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
     @NotNull
     @Column(name = "active")
     private boolean active;
+    @Max(value = 99999)
+    @Min(value = 0)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "price")
+    private BigDecimal price;
+    @ManyToMany(mappedBy = "garmentList")
+    private List<CompatibleGarment> compatibleGarmentList;
 
-    public CompatibleGarment() {
+    public Garment() {
     }
 
-    public CompatibleGarment(Integer id) {
+    public Garment(Integer id) {
         this.id = id;
     }
 
-    public CompatibleGarment(Integer id, String name, String description, String previewImage, String image, boolean active) {
+    public Garment(Integer id, String name, String description, String previewImage, String image, boolean active, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.previewImage = previewImage;
         this.image = image;
         this.active = active;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -164,6 +164,22 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
         this.active = active;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public List<CompatibleGarment> getCompatibleGarmentList() {
+        return compatibleGarmentList;
+    }
+
+    public void setCompatibleGarmentList(List<CompatibleGarment> compatibleGarmentList) {
+        this.compatibleGarmentList = compatibleGarmentList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -174,10 +190,10 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CompatibleGarment)) {
+        if (!(object instanceof Garment)) {
             return false;
         }
-        CompatibleGarment other = (CompatibleGarment) object;
+        Garment other = (Garment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -186,7 +202,7 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
 
     @Override
     public String toString() {
-        return "com.ub.ropalinda.entities.CompatibleGarment[ id=" + id + " ]";
+        return "com.ub.ropalinda.entities.Garment[ id=" + id + " ]";
     }
 
     @Override
@@ -194,20 +210,12 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
         return id;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Subcategory getSubcategory() {
+        return subcategory;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public List<Garment> getGarmentList() {
-        return garmentList;
-    }
-
-    public void setGarmentList(List<Garment> garmentList) {
-        this.garmentList = garmentList;
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
 }
