@@ -135,7 +135,7 @@ public class ModelProspectiveCustomer
         EntityManager em = this.createEm();
         ProspectiveCustomer pc = em.find(ProspectiveCustomer.class, email);
         if (pc == null) {
-            throw new InvalidValueException("No existe el cliente prospecto");
+            throw new InvalidValueException("No existe el cliente");
         }
         Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);        
                 

@@ -17,6 +17,7 @@
  */
 package com.ub.ropalinda.utils;
 
+import com.ub.ropalinda.entities.Customer;
 import com.ub.ropalinda.entities.ProspectiveCustomer;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -116,6 +117,51 @@ public class UtilsMail {
         // send the email
         email.send();
     }
+    
+    public static void sendRecoverPassCode(String hostMail, int port, String mail,
+            String pass, String from, String toMail, String codigoRecuperacion)
+            throws EmailException, MalformedURLException {
+        HtmlEmail email = new HtmlEmail();
+        email.setHostName(hostMail);
+        email.setSmtpPort(port);
+        email.setAuthentication(mail, pass);
+        email.setSSL(true);
+        email.setFrom(mail);
+        email.setSubject("Recuperación de contraseña");
+        email.addTo(toMail);
+
+        String htmlCadena
+                = "<html>\n"
+                + "   <body style=\"color: rgba(0,0,0, 0.8); font-family: verdana; font-size: 14px;\">\n"
+                + "     <div style=\"width: 100%; display: flex; justfy-content: center;\">\n"
+                + "       <div style=\"width: 70%;\">\n"
+                + "         <div style=\"border: 1px solid rgba(128, 128, 128, 0.31); width: 100%; padding: 20px;\">\n"
+                + "           <h3 style=\"margin-top: 0;\">\n"
+                + "             Hola\n"
+                + "           </h3>\n"
+                + "           <p>Utilize el siguiente código para continuar con el proceso de recuperación de contraseña</p>\n"
+                + "         <div style=\"background: #009BD2; color: white; padding: 10px; width: 100px; text-align: center;\">\n"
+                + codigoRecuperacion
+                + "         </div>\n"
+                + "         </div>\n"
+                + "         <div style=\"width: 100%; margin-bottom: 10px;\">\n"
+                + "           <p style=\"margin-left: 20px; color: rgba(128, 128, 128, 0.5);\">\n"
+                + "             Ropalinda, siempre a la moda.\n"
+                + "           </p>\n"
+                + "         </div>\n"
+                + "       </div>\n"
+                + "     </div>\n"
+                + "   </body>\n"
+                + "</html>";
+
+        // set the html message           
+        email.setHtmlMsg(htmlCadena);
+        String defaultMsg = "Su código de recuperación es: " + codigoRecuperacion;
+        // set the alternative message
+        email.setTextMsg(defaultMsg);
+        // send the email
+        email.send();
+    }
 
     public static void testSendMail() {
         try {
@@ -163,6 +209,7 @@ public class UtilsMail {
     public static class ModelSendActivationCode {
 
         private ProspectiveCustomer pros;
+        private Customer cus;
         private String code;
 
         public ModelSendActivationCode() {
@@ -172,6 +219,11 @@ public class UtilsMail {
             this.pros = pros;
             this.code = code;
         }
+        
+        public ModelSendActivationCode(Customer cus, String code) {
+            this.cus = cus;
+            this.code = code;
+        }
 
         public ProspectiveCustomer getPros() {
             return pros;
@@ -179,6 +231,14 @@ public class UtilsMail {
 
         public void setPros(ProspectiveCustomer pros) {
             this.pros = pros;
+        }
+        
+        public Customer getCus() {
+            return cus;
+        }
+
+        public void setCus(Customer cus) {
+            this.cus = cus;
         }
 
         public String getCode() {
