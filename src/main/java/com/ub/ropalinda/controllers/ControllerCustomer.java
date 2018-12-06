@@ -19,7 +19,13 @@ package com.ub.ropalinda.controllers;
 
 import com.ub.ropalinda.entities.Customer;
 import com.ub.ropalinda.models.ModelCustomer;
+import com.ub.ropalinda.utils.UtilsService;
+import static com.ub.ropalinda.utils.UtilsService.error;
 import com.ub.ropalinda.utils.commons.Controller;
+import com.ub.ropalinda.utils.commons.reponses.Response;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
+import java.util.Map;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 /**
@@ -31,6 +37,23 @@ public class ControllerCustomer extends Controller<ModelCustomer, Customer, Stri
     
     public ControllerCustomer() {        
         super(new ModelCustomer());
-    }    
+    }
+    
+    @Path("/login")
+    @POST
+    public Response<Map> login(Map<String, String> map) {
+        Response<Map> res = new Response();
+        try {
+            String mail = map.get("mail");
+            String pass = map.get("pass");                        
+            Map<String, Object> data = this.model.login(mail, pass);            
+            res.setData(data);                        
+        } catch (InvalidValueException e) {
+            UtilsService.invalidParam(res, e, e.getMessage());        
+        } catch (Exception e) {
+            error(res, e);
+        }
+        return res;
+    }
     
 }
