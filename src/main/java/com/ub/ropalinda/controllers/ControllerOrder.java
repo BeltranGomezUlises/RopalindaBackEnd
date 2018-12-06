@@ -17,8 +17,8 @@
  */
 package com.ub.ropalinda.controllers;
 
-import com.ub.ropalinda.entities.Garment;
-import com.ub.ropalinda.models.ModelGarment;
+import com.ub.ropalinda.entities.PurchaseOrder;
+import com.ub.ropalinda.models.ModelOrder;
 import com.ub.ropalinda.utils.commons.Controller;
 import javax.ws.rs.Path;
 
@@ -26,21 +26,11 @@ import javax.ws.rs.Path;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-@Path("/garments")
-public class ControllerGarment extends Controller<ModelGarment, Garment, Integer>{
+@Path("/orders")
+public class ControllerOrder extends Controller<ModelOrder, PurchaseOrder, Integer> {
     
-    public ControllerGarment() {
-        super(new ModelGarment());
+    public ControllerOrder() {
+        super(new ModelOrder());
     }
-
-    @Override
-    protected boolean findByRequiresToken() {
-        return false;
-    }
-
-    @Override
-    protected boolean findAllRequiresToken() {
-        return false;
-    }    
     
 }

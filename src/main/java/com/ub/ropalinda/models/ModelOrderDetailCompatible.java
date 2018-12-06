@@ -15,32 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package com.ub.ropalinda.controllers;
+package com.ub.ropalinda.models;
 
-import com.ub.ropalinda.entities.Garment;
-import com.ub.ropalinda.models.ModelGarment;
-import com.ub.ropalinda.utils.commons.Controller;
-import javax.ws.rs.Path;
+import com.ub.ropalinda.entities.OrderDetailCompatible;
+import com.ub.ropalinda.utils.commons.Model;
 
 /**
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-@Path("/garments")
-public class ControllerGarment extends Controller<ModelGarment, Garment, Integer>{
+public class ModelOrderDetailCompatible extends Model<OrderDetailCompatible, Integer> {
     
-    public ControllerGarment() {
-        super(new ModelGarment());
+    public ModelOrderDetailCompatible() {
+        super(OrderDetailCompatible.class);
     }
-
-    @Override
-    protected boolean findByRequiresToken() {
-        return false;
-    }
-
-    @Override
-    protected boolean findAllRequiresToken() {
-        return false;
-    }    
     
 }

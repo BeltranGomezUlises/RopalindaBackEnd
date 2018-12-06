@@ -89,4 +89,8 @@ public class UtilsJWT {
         return builder.signWith(SignatureAlgorithm.HS512, PUBLIC_KEY).compact();
     }    
 
+    
+    public static void main(String[] args) {
+        System.out.println(token("1"));
+    }
 }

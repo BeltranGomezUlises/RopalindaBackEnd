@@ -28,11 +28,16 @@ public class ApplicationConfig extends Application {
      * Do not modify addRestResourceClasses() method. It is automatically populated with all resources defined in the project. If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.ub.ropalinda.controllers.ControllerAddress.class);
         resources.add(com.ub.ropalinda.controllers.ControllerCategory.class);
         resources.add(com.ub.ropalinda.controllers.ControllerCompatibleGarment.class);
         resources.add(com.ub.ropalinda.controllers.ControllerCustomer.class);
         resources.add(com.ub.ropalinda.controllers.ControllerEmployee.class);
         resources.add(com.ub.ropalinda.controllers.ControllerGarment.class);
+        resources.add(com.ub.ropalinda.controllers.ControllerOrder.class);
+        resources.add(com.ub.ropalinda.controllers.ControllerOrderDetail.class);
+        resources.add(com.ub.ropalinda.controllers.ControllerOrderDetailCompatible.class);
+        resources.add(com.ub.ropalinda.controllers.ControllerPayment.class);
         resources.add(com.ub.ropalinda.controllers.ControllerProspectiveCustomer.class);
         resources.add(com.ub.ropalinda.controllers.ControllerSubcategory.class);
         resources.add(com.ub.ropalinda.controllers.Utilerias.class);

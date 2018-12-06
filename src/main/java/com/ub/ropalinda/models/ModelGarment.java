@@ -17,38 +17,72 @@
  */
 package com.ub.ropalinda.models;
 
+import com.ub.ropalinda.entities.CompatibleGarment;
 import com.ub.ropalinda.entities.Garment;
 import com.ub.ropalinda.entities.Subcategory;
 import com.ub.ropalinda.utils.commons.Model;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import javax.persistence.EntityManager;
 
 /**
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelGarment extends Model<Garment, Integer>{
-    
+public class ModelGarment extends Model<Garment, Integer> {
+
     public ModelGarment() {
         super(Garment.class);
     }
 
     @Override
     public Garment persist(Garment t) throws UniqueException {
-        Subcategory subCat = this.createEm().find(Subcategory.class, t.getSubcategory().getId());
+        EntityManager em = this.createEm();
+        Subcategory subCat = em.find(Subcategory.class, t.getSubcategory().getId());
         t.setSubcategory(subCat);
+        em.close();
         return super.persist(t); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void update(Garment t) throws UniqueException {
-        Subcategory subCat = this.createEm().find(Subcategory.class, t.getSubcategory().getId());
-        t.setSubcategory(subCat);
-        super.update(t); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = this.createEm();
+        try {
+            em.getTransaction().begin();
+            
+            Garment actual = em.find(Garment.class, t.getId());
+            actual.setActive(t.getActive());
+            actual.setDescription(t.getDescription());
+            actual.setName(t.getName());
+            actual.setPrice(t.getPrice());
+            actual.setPreviewImage(t.getPreviewImage());
+            actual.setSubcategory(em.find(Subcategory.class, t.getSubcategory().getId()));
+
+            actual.getImagesList().clear();            
+            em.flush();
+
+            t.getImagesList().forEach(i -> {
+                i.setGarment1(actual);
+                actual.addImage(i);
+                em.persist(i);
+            });
+            
+            actual.getCompatibleGarmentList().clear();            
+            em.createNativeQuery("delete from garmet_compatible_garment where garment = ?")
+                    .setParameter(1, actual.getId()).executeUpdate();
+                            
+            t.getCompatibleGarmentList().forEach( c -> {
+                CompatibleGarment cmp = em.find(CompatibleGarment.class, c.getId());                
+                actual.addCompatibleGarment(cmp);
+                cmp.addGarment(actual);
+            });
+            
+            em.merge(actual);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            em.close();
+        }
     }
-    
-    
-    
-    
-    
-    
+
 }

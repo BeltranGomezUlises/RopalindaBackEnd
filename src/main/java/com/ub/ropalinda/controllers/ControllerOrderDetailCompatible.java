@@ -17,8 +17,8 @@
  */
 package com.ub.ropalinda.controllers;
 
-import com.ub.ropalinda.entities.Garment;
-import com.ub.ropalinda.models.ModelGarment;
+import com.ub.ropalinda.entities.OrderDetailCompatible;
+import com.ub.ropalinda.models.ModelOrderDetailCompatible;
 import com.ub.ropalinda.utils.commons.Controller;
 import javax.ws.rs.Path;
 
@@ -26,21 +26,11 @@ import javax.ws.rs.Path;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-@Path("/garments")
-public class ControllerGarment extends Controller<ModelGarment, Garment, Integer>{
+@Path("/orderDetailCompatibles")
+public class ControllerOrderDetailCompatible extends Controller<ModelOrderDetailCompatible, OrderDetailCompatible, Integer>{
     
-    public ControllerGarment() {
-        super(new ModelGarment());
+    public ControllerOrderDetailCompatible() {
+        super(new ModelOrderDetailCompatible());
     }
-
-    @Override
-    protected boolean findByRequiresToken() {
-        return false;
-    }
-
-    @Override
-    protected boolean findAllRequiresToken() {
-        return false;
-    }    
     
 }

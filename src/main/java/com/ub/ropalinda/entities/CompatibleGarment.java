@@ -17,12 +17,15 @@
  */
 package com.ub.ropalinda.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +36,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -55,12 +59,16 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "CompatibleGarment.findByActive", query = "SELECT c FROM CompatibleGarment c WHERE c.active = :active")})
 public class CompatibleGarment extends IEntity<Integer> implements Serializable {
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compatibleGarment")
+    private List<OrderDetailCompatible> orderDetailCompatibleList;
+    
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinTable(name = "garmet_compatible_garment", joinColumns = {
         @JoinColumn(name = "compatible_garment", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "garment", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Garment> garmentList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Garment> garmentList;
 
     @Max(value = 9999)
     @Min(value = 0)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -202,12 +210,24 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
         this.price = price;
     }
 
-    public List<Garment> getGarmentList() {
+    public Set<Garment> getGarmentList() {
         return garmentList;
     }
 
-    public void setGarmentList(List<Garment> garmentList) {
+    public void setGarmentList(Set<Garment> garmentList) {
         this.garmentList = garmentList;
+    }
+
+    public List<OrderDetailCompatible> getOrderDetailCompatibleList() {
+        return orderDetailCompatibleList;
+    }
+
+    public void setOrderDetailCompatibleList(List<OrderDetailCompatible> orderDetailCompatibleList) {
+        this.orderDetailCompatibleList = orderDetailCompatibleList;
+    }
+    
+    public void addGarment(Garment g){
+        this.garmentList.add(g);
     }
 
 }

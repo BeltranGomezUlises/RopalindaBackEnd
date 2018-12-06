@@ -17,14 +17,17 @@
  */
 package com.ub.ropalinda.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,11 +36,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
  *
@@ -51,11 +56,17 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Garment.findByName", query = "SELECT g FROM Garment g WHERE g.name = :name")
     , @NamedQuery(name = "Garment.findByDescription", query = "SELECT g FROM Garment g WHERE g.description = :description")
     , @NamedQuery(name = "Garment.findByPreviewImage", query = "SELECT g FROM Garment g WHERE g.previewImage = :previewImage")
-    , @NamedQuery(name = "Garment.findByImage", query = "SELECT g FROM Garment g WHERE g.image = :image")
     , @NamedQuery(name = "Garment.findByActive", query = "SELECT g FROM Garment g WHERE g.active = :active")
     , @NamedQuery(name = "Garment.findByPrice", query = "SELECT g FROM Garment g WHERE g.price = :price")})
 public class Garment extends IEntity<Integer> implements Serializable {
-    
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "garment1", fetch = FetchType.EAGER, orphanRemoval = true)
+    @PrivateOwned
+    private List<Images> imagesList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "garment")
+    private List<OrderDetail> orderDetailList;
+
     @JoinColumn(name = "subcategory", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Subcategory subcategory;
@@ -83,11 +94,6 @@ public class Garment extends IEntity<Integer> implements Serializable {
     private String previewImage;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 200)
-    @Column(name = "image")
-    private String image;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
     @Max(value = 99999)
@@ -96,24 +102,10 @@ public class Garment extends IEntity<Integer> implements Serializable {
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
-    @ManyToMany(mappedBy = "garmentList")
-    private List<CompatibleGarment> compatibleGarmentList;
+    @ManyToMany(mappedBy = "garmentList", cascade = CascadeType.ALL)    
+    private Set<CompatibleGarment> compatibleGarmentList;
 
     public Garment() {
-    }
-
-    public Garment(Integer id) {
-        this.id = id;
-    }
-
-    public Garment(Integer id, String name, String description, String previewImage, String image, boolean active, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.previewImage = previewImage;
-        this.image = image;
-        this.active = active;
-        this.price = price;
     }
 
     public Integer getId() {
@@ -148,14 +140,6 @@ public class Garment extends IEntity<Integer> implements Serializable {
         this.previewImage = previewImage;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public boolean getActive() {
         return active;
     }
@@ -172,11 +156,11 @@ public class Garment extends IEntity<Integer> implements Serializable {
         this.price = price;
     }
 
-    public List<CompatibleGarment> getCompatibleGarmentList() {
+    public Set<CompatibleGarment> getCompatibleGarmentList() {
         return compatibleGarmentList;
     }
 
-    public void setCompatibleGarmentList(List<CompatibleGarment> compatibleGarmentList) {
+    public void setCompatibleGarmentList(Set<CompatibleGarment> compatibleGarmentList) {
         this.compatibleGarmentList = compatibleGarmentList;
     }
 
@@ -216,6 +200,30 @@ public class Garment extends IEntity<Integer> implements Serializable {
 
     public void setSubcategory(Subcategory subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public List<Images> getImagesList() {
+        return imagesList;
+    }
+
+    public void setImagesList(List<Images> imagesList) {
+        this.imagesList = imagesList;
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
+
+    public void addImage(Images i) {
+        this.imagesList.add(i);
+    }
+    
+    public void addCompatibleGarment(CompatibleGarment cmp){
+        this.compatibleGarmentList.add(cmp);
     }
 
 }

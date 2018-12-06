@@ -17,13 +17,17 @@
  */
 package com.ub.ropalinda.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +41,13 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "customer")
 public class Customer extends IEntity<String> implements Serializable {
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<Address> addressList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<PurchaseOrder> purchaseOrderList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -187,5 +198,21 @@ public class Customer extends IEntity<String> implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }  
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
+    public List<PurchaseOrder> getPurchaseOrderList() {
+        return purchaseOrderList;
+    }
+
+    public void setPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
+        this.purchaseOrderList = purchaseOrderList;
+    }
 
 }

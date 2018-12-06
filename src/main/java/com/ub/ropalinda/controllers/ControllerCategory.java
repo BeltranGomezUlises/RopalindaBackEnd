@@ -33,5 +33,11 @@ public class ControllerCategory extends Controller<ModelCategory, Category, Inte
     public ControllerCategory() {
         super(new ModelCategory());
     }
+
+    @Override
+    protected boolean findAllRequiresToken() {
+        return false;
+    }
+    
     
 }

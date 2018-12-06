@@ -31,6 +31,13 @@ public class ControllerSubcategory extends Controller<ModelSubcategory, Subcateg
     
     public ControllerSubcategory() {
         super(new ModelSubcategory());
-    }        
+    }      
+
+    @Override
+    protected boolean findAllRequiresToken() {
+        return false;
+    }
+    
+    
     
 }

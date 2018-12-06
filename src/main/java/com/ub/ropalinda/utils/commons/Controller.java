@@ -37,8 +37,7 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
     }
 
     @GET
-    public Response<List> findAll(
-            @HeaderParam("Authorization") String token,
+    public Response<List> findAll(@HeaderParam("Authorization") String token,
             @QueryParam("select") String select,
             @QueryParam("from") Integer from,
             @QueryParam("to") Integer to) {
