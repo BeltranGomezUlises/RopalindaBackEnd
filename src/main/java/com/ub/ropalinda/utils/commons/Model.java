@@ -95,12 +95,12 @@ public class Model<T extends IEntity<K>, K> {
             em.getTransaction().commit();
             return t;
         } catch (Exception e) {
-//            String exMessage = e.getMessage();
-//            if (exMessage.contains("Ya existe la llave")) {
-//                throw this.uniqueException(exMessage);
-//            } else {
-            throw e;
-//            }
+            String exMessage = e.getMessage();
+            if (exMessage.contains("Ya existe la llave")) {
+                throw this.uniqueException(exMessage);
+            } else {
+                throw e;
+            }
         } finally {
             em.close();
         }
@@ -318,8 +318,14 @@ public class Model<T extends IEntity<K>, K> {
         return UtilsDB.getEMFactoryCG().createEntityManager();
     }
 
+    /**
+     * Generic exception creator with the personalized message for the final user
+     *
+     * @param exMessage message from the persistance exception
+     * @return instance of UniqueException with the properies of field and value assigned
+     */
     protected UniqueException uniqueException(String exMessage) {
-        int index = exMessage.indexOf("Detail:");
+        int index = exMessage.indexOf("Detail:") + 7;
         String newMessage = "";
         for (int i = index; i < exMessage.length(); i++) {
             char nextChar = exMessage.charAt(i);
@@ -332,8 +338,11 @@ public class Model<T extends IEntity<K>, K> {
         //get field and value
         String[] parts = newMessage.split("=");
 
-        String field = parts[0].split("(")[1];
+        String field = parts[0].split("\\(")[1];
+        field = field.substring(0, field.length() - 1);
+
         String value = parts[1];
+        value = value.substring(1, value.length() - 1);
 
         return new UniqueException(field, value, exMessage);
     }

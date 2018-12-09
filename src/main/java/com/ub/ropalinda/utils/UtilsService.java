@@ -49,7 +49,7 @@ public class UtilsService {
      */
     public static final void unique(Response res, UniqueException e) {
         res.setStatus(Status.WARNING);
-        res.setMessage("Valor inválido");
+        res.setMessage("Ya existe el valor " + e.getValue() + " en el campo " + e.getField());
         res.setDevMessage(e.getMessage());
         Map<String, String> metadata = new HashMap<>();
         metadata.put("value", e.getValue());

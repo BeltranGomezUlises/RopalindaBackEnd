@@ -21,6 +21,7 @@ import com.ub.ropalinda.entities.Employee;
 import com.ub.ropalinda.utils.UtilsJWT;
 import com.ub.ropalinda.utils.UtilsSecurity;
 import com.ub.ropalinda.utils.commons.Model;
+import com.ub.ropalinda.utils.commons.reponses.UniqueException;
 import com.ub.ropalinda.utils.validation.InvalidValueException;
 import com.ub.ropalinda.utils.validation.UtilsValidation;
 import java.util.HashMap;
@@ -56,5 +57,15 @@ public class ModelEmployee extends Model<Employee, String> {
         map.put("token", token);
         return map;
     }
+
+    @Override
+    public Employee persist(Employee t) throws UniqueException {
+        
+        
+        
+        return super.persist(t); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }
