@@ -17,6 +17,7 @@
  */
 package com.ub.ropalinda.entities;
 
+import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -41,7 +42,7 @@ import javax.validation.constraints.NotNull;
     , @NamedQuery(name = "Conf.findByMaxGarmentPerLine", query = "SELECT c FROM Conf c WHERE c.maxGarmentPerLine = :maxGarmentPerLine")
     , @NamedQuery(name = "Conf.findByMaxAmountPerPurchase", query = "SELECT c FROM Conf c WHERE c.maxAmountPerPurchase = :maxAmountPerPurchase")
     , @NamedQuery(name = "Conf.findById", query = "SELECT c FROM Conf c WHERE c.id = :id")})
-public class Conf implements Serializable {
+public class Conf extends IEntity<Integer> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -118,6 +119,21 @@ public class Conf implements Serializable {
     @Override
     public String toString() {
         return "com.ub.ropalinda.entities.Conf[ id=" + id + " ]";
+    }
+
+    @Override
+    public Integer objectPK() {
+        return id;
+    }
+
+    @Override
+    public boolean getActive() {
+        return true;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        
     }
     
 }
