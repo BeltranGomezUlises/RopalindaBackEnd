@@ -40,7 +40,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")})
 public class Employee extends IEntity<String> implements Serializable {
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "employee_type")

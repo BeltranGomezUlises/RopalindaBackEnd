@@ -27,8 +27,8 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/garments")
-public class ControllerGarment extends Controller<ModelGarment, Garment, Integer>{
-    
+public class ControllerGarment extends Controller<ModelGarment, Garment, Integer> {
+
     public ControllerGarment() {
         super(new ModelGarment());
     }
@@ -41,6 +41,6 @@ public class ControllerGarment extends Controller<ModelGarment, Garment, Integer
     @Override
     protected boolean findAllRequiresToken() {
         return false;
-    }    
-    
+    }
+
 }

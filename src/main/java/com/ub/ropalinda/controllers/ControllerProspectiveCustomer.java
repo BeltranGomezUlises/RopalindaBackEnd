@@ -17,7 +17,6 @@
  */
 package com.ub.ropalinda.controllers;
 
-import com.ub.ropalinda.utils.commons.Controller;
 import com.ub.ropalinda.entities.ProspectiveCustomer;
 import com.ub.ropalinda.models.ModelProspectiveCustomer;
 import com.ub.ropalinda.utils.UtilsJWT;
@@ -25,6 +24,7 @@ import static com.ub.ropalinda.utils.UtilsService.error;
 import static com.ub.ropalinda.utils.UtilsService.invalidParam;
 import static com.ub.ropalinda.utils.UtilsService.invalidToken;
 import static com.ub.ropalinda.utils.UtilsService.warning;
+import com.ub.ropalinda.utils.commons.Controller;
 import com.ub.ropalinda.utils.commons.reponses.AccessDeniedException;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.validation.InvalidValueException;
@@ -57,8 +57,8 @@ public class ControllerProspectiveCustomer extends Controller<ModelProspectiveCu
         } catch (InvalidValueException e) {
             invalidParam(res, e);
         } catch (Exception e) {
-            error(res, e);        
-        } 
+            error(res, e);
+        }
         return res;
     }
 
@@ -66,8 +66,8 @@ public class ControllerProspectiveCustomer extends Controller<ModelProspectiveCu
     @Path("/activate")
     public Response customerRequest(HashMap<String, String> req) {
         Response res = new Response();
-        try {                     
-            model.customerActivation(req.get("token"), req.get("code"));            
+        try {
+            model.customerActivation(req.get("token"), req.get("code"));
         } catch (InvalidValueException e) {
             warning(res, e.getMessage(), null);
         } catch (Exception e) {
@@ -75,40 +75,40 @@ public class ControllerProspectiveCustomer extends Controller<ModelProspectiveCu
         }
         return res;
     }
-    
+
     @PUT
     @Path("/reject")
-    public Response<Boolean> reject(@HeaderParam("Authorization") String token, 
-            Map<String, String> body){
-        Response<Boolean> res = new Response<>();        
-        try {                     
+    public Response<Boolean> reject(@HeaderParam("Authorization") String token,
+            Map<String, String> body) {
+        Response<Boolean> res = new Response<>();
+        try {
             UtilsJWT.validate(token);
-            model.reject(body.get("mail"));            
+            model.reject(body.get("mail"));
         } catch (InvalidValueException e) {
             warning(res, e.getMessage(), null);
-        }catch (AccessDeniedException e) {
+        } catch (AccessDeniedException e) {
             invalidToken(res);
         } catch (Exception e) {
             error(res, e);
-        }        
+        }
         return res;
     }
-    
+
     @POST
     @Path("/accept")
-    public Response<Boolean> accept(@HeaderParam("Authorization") String token, 
-            Map<String, String> body){
-        Response<Boolean> res = new Response<>();        
-        try {                     
+    public Response<Boolean> accept(@HeaderParam("Authorization") String token,
+            Map<String, String> body) {
+        Response<Boolean> res = new Response<>();
+        try {
             UtilsJWT.validate(token);
-            model.accept(body.get("mail"));            
+            model.accept(body.get("mail"));
         } catch (InvalidValueException e) {
             warning(res, e.getMessage(), null);
-        }catch (AccessDeniedException e) {
+        } catch (AccessDeniedException e) {
             invalidToken(res);
         } catch (Exception e) {
             error(res, e);
-        }        
+        }
         return res;
     }
 

@@ -36,7 +36,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "prospective_customer")
-public class ProspectiveCustomer extends IEntity<String> implements Serializable {    
+public class ProspectiveCustomer extends IEntity<String> implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -192,7 +192,7 @@ public class ProspectiveCustomer extends IEntity<String> implements Serializable
 
     public void setPass(String pass) {
         this.pass = pass;
-    }    
+    }
 
     public String getRfc() {
         return rfc;

@@ -9,10 +9,8 @@ import static com.ub.ropalinda.utils.validation.InvalidValueException.MESSAGE_EM
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
- * Container for all the validation methods of logical operators, list and
- * strings but not considering null validation
+ * Container for all the validation methods of logical operators, list and strings but not considering null validation
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */

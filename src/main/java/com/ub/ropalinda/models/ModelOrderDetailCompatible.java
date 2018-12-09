@@ -25,9 +25,9 @@ import com.ub.ropalinda.utils.commons.Model;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 public class ModelOrderDetailCompatible extends Model<OrderDetailCompatible, Integer> {
-    
+
     public ModelOrderDetailCompatible() {
         super(OrderDetailCompatible.class);
     }
-    
+
 }

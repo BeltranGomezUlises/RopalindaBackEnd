@@ -11,8 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Container for all the validation methods of logical operators, list and
- * strings considering null validation
+ * Container for all the validation methods of logical operators, list and strings considering null validation
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */

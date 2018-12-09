@@ -27,10 +27,10 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/orderDetails")
-public class ControllerOrderDetail extends Controller<ModelOrderDetail, OrderDetail, Integer>{
-    
+public class ControllerOrderDetail extends Controller<ModelOrderDetail, OrderDetail, Integer> {
+
     public ControllerOrderDetail() {
         super(new ModelOrderDetail());
     }
-    
+
 }

@@ -26,10 +26,9 @@ import javax.ws.rs.Path;
  *
  * @author valle
  */
-
 @Path("/categories")
-public class ControllerCategory extends Controller<ModelCategory, Category, Integer>{
-    
+public class ControllerCategory extends Controller<ModelCategory, Category, Integer> {
+
     public ControllerCategory() {
         super(new ModelCategory());
     }
@@ -43,5 +42,5 @@ public class ControllerCategory extends Controller<ModelCategory, Category, Inte
     protected boolean findByRequiresToken() {
         return false; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

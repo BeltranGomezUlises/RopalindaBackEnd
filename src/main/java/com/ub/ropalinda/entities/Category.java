@@ -19,7 +19,6 @@ package com.ub.ropalinda.entities;
 
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -157,5 +156,5 @@ public class Category extends IEntity<Integer> implements Serializable {
     public void setSubcategoryCollection(List<Subcategory> subcategoryCollection) {
         this.subcategoryCollection = subcategoryCollection;
     }
-    
+
 }

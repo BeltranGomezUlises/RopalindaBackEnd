@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelPayment extends Model<Payment, String>{
-    
+public class ModelPayment extends Model<Payment, String> {
+
     public ModelPayment() {
         super(Payment.class);
     }
-    
+
 }

@@ -48,7 +48,7 @@ public class ModelGarment extends Model<Garment, Integer> {
         EntityManager em = this.createEm();
         try {
             em.getTransaction().begin();
-            
+
             Garment actual = em.find(Garment.class, t.getId());
             actual.setActive(t.getActive());
             actual.setDescription(t.getDescription());
@@ -57,7 +57,7 @@ public class ModelGarment extends Model<Garment, Integer> {
             actual.setPreviewImage(t.getPreviewImage());
             actual.setSubcategory(em.find(Subcategory.class, t.getSubcategory().getId()));
 
-            actual.getImagesList().clear();            
+            actual.getImagesList().clear();
             em.flush();
 
             t.getImagesList().forEach(i -> {
@@ -65,17 +65,17 @@ public class ModelGarment extends Model<Garment, Integer> {
                 actual.addImage(i);
                 em.persist(i);
             });
-            
-            actual.getCompatibleGarmentList().clear();            
+
+            actual.getCompatibleGarmentList().clear();
             em.createNativeQuery("delete from garmet_compatible_garment where garment = ?")
                     .setParameter(1, actual.getId()).executeUpdate();
-                            
-            t.getCompatibleGarmentList().forEach( c -> {
-                CompatibleGarment cmp = em.find(CompatibleGarment.class, c.getId());                
+
+            t.getCompatibleGarmentList().forEach(c -> {
+                CompatibleGarment cmp = em.find(CompatibleGarment.class, c.getId());
                 actual.addCompatibleGarment(cmp);
                 cmp.addGarment(actual);
             });
-            
+
             em.merge(actual);
             em.getTransaction().commit();
         } catch (Exception e) {

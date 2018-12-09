@@ -84,52 +84,44 @@ public class Utilerias {
         }
         return r;
     }
-    
+
     @GET
     @Path("/download/{fileName}")
-    public javax.ws.rs.core.Response downloadFile(@PathParam("fileName") String fileName)
-    {
+    public javax.ws.rs.core.Response downloadFile(@PathParam("fileName") String fileName) {
         StreamingOutput fileStream = (output) -> {
-            try
-            {
+            try {
                 java.nio.file.Path path = Paths.get(FOLDER_PATH_TO_UPLOAD + fileName);
                 byte[] data = Files.readAllBytes(path);
                 output.write(data);
                 output.flush();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 throw new WebApplicationException("File Not Found !!");
             }
-        };        
+        };
         return javax.ws.rs.core.Response
                 .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
-                .header("content-disposition","attachment; filename = " + fileName)
+                .header("content-disposition", "attachment; filename = " + fileName)
                 .build();
     }
-    
+
     @GET
     @Path("/getFile/{fileName}")
-    public javax.ws.rs.core.Response getFile(@PathParam("fileName") String fileName)
-    {
+    public javax.ws.rs.core.Response getFile(@PathParam("fileName") String fileName) {
         StreamingOutput fileStream = (output) -> {
-            try
-            {
+            try {
                 java.nio.file.Path path = Paths.get(FOLDER_PATH_TO_UPLOAD + fileName);
                 byte[] data = Files.readAllBytes(path);
                 output.write(data);
                 output.flush();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 throw new WebApplicationException("File Not Found !!");
             }
-        };        
+        };
         return javax.ws.rs.core.Response
-                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)                
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
                 .build();
     }
-    
+
     // save uploaded file to new location
     private void writeToFile(InputStream uploadedInputStream, String uploadedFileLocation)
             throws FileNotFoundException, IOException {

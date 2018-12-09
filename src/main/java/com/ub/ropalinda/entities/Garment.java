@@ -60,6 +60,10 @@ import org.eclipse.persistence.annotations.PrivateOwned;
     , @NamedQuery(name = "Garment.findByPrice", query = "SELECT g FROM Garment g WHERE g.price = :price")})
 public class Garment extends IEntity<Integer> implements Serializable {
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "garment")
+    private List<PersonalizedGarment> personalizedGarmentList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "garment1", fetch = FetchType.EAGER, orphanRemoval = true)
     @PrivateOwned
     private List<Images> imagesList;
@@ -102,7 +106,7 @@ public class Garment extends IEntity<Integer> implements Serializable {
     @NotNull
     @Column(name = "price")
     private BigDecimal price;
-    @ManyToMany(mappedBy = "garmentList", cascade = CascadeType.ALL)    
+    @ManyToMany(mappedBy = "garmentList", cascade = CascadeType.ALL)
     private Set<CompatibleGarment> compatibleGarmentList;
 
     public Garment() {
@@ -221,9 +225,17 @@ public class Garment extends IEntity<Integer> implements Serializable {
     public void addImage(Images i) {
         this.imagesList.add(i);
     }
-    
-    public void addCompatibleGarment(CompatibleGarment cmp){
+
+    public void addCompatibleGarment(CompatibleGarment cmp) {
         this.compatibleGarmentList.add(cmp);
+    }
+
+    public List<PersonalizedGarment> getPersonalizedGarmentList() {
+        return personalizedGarmentList;
+    }
+
+    public void setPersonalizedGarmentList(List<PersonalizedGarment> personalizedGarmentList) {
+        this.personalizedGarmentList = personalizedGarmentList;
     }
 
 }

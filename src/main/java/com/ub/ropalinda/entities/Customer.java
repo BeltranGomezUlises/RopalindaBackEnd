@@ -44,6 +44,10 @@ public class Customer extends IEntity<String> implements Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<PersonalizedGarment> personalizedGarmentList;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Address> addressList;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
@@ -83,7 +87,7 @@ public class Customer extends IEntity<String> implements Serializable {
     private String phone;
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
-    private Date birthday;    
+    private Date birthday;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
@@ -197,7 +201,7 @@ public class Customer extends IEntity<String> implements Serializable {
     @Override
     public void setActive(boolean active) {
         this.active = active;
-    }  
+    }
 
     public List<Address> getAddressList() {
         return addressList;
@@ -213,6 +217,14 @@ public class Customer extends IEntity<String> implements Serializable {
 
     public void setPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
         this.purchaseOrderList = purchaseOrderList;
+    }
+
+    public List<PersonalizedGarment> getPersonalizedGarmentList() {
+        return personalizedGarmentList;
+    }
+
+    public void setPersonalizedGarmentList(List<PersonalizedGarment> personalizedGarmentList) {
+        this.personalizedGarmentList = personalizedGarmentList;
     }
 
 }

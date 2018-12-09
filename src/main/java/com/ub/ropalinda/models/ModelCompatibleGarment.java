@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelCompatibleGarment extends Model<CompatibleGarment, Integer>{
-    
+public class ModelCompatibleGarment extends Model<CompatibleGarment, Integer> {
+
     public ModelCompatibleGarment() {
         super(CompatibleGarment.class);
     }
-    
+
 }

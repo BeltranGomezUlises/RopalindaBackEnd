@@ -27,10 +27,10 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/addresses")
-public class ControllerAddress extends Controller<ModelAddress, Address, Integer>{
-    
+public class ControllerAddress extends Controller<ModelAddress, Address, Integer> {
+
     public ControllerAddress() {
         super(new ModelAddress());
     }
-    
+
 }

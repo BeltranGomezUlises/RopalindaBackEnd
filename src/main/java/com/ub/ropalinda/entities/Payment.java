@@ -155,5 +155,5 @@ public class Payment extends IEntity<String> implements Serializable {
     public String objectPK() {
         return reference;
     }
-    
+
 }

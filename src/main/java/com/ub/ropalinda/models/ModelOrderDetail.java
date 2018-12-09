@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelOrderDetail extends Model<OrderDetail, Integer>{
-    
+public class ModelOrderDetail extends Model<OrderDetail, Integer> {
+
     public ModelOrderDetail() {
         super(OrderDetail.class);
     }
-    
+
 }

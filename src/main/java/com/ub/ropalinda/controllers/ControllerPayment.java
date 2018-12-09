@@ -27,10 +27,10 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/payments")
-public class ControllerPayment extends Controller<ModelPayment, Payment, String>{
-    
+public class ControllerPayment extends Controller<ModelPayment, Payment, String> {
+
     public ControllerPayment() {
         super(new ModelPayment());
     }
-    
+
 }

@@ -61,8 +61,12 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "compatibleGarment")
+    private List<PersonalizedGarmentCompatible> personalizedGarmentCompatibleList;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compatibleGarment")
     private List<OrderDetailCompatible> orderDetailCompatibleList;
-    
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinTable(name = "garmet_compatible_garment", joinColumns = {
         @JoinColumn(name = "compatible_garment", referencedColumnName = "id")}, inverseJoinColumns = {
@@ -225,9 +229,17 @@ public class CompatibleGarment extends IEntity<Integer> implements Serializable 
     public void setOrderDetailCompatibleList(List<OrderDetailCompatible> orderDetailCompatibleList) {
         this.orderDetailCompatibleList = orderDetailCompatibleList;
     }
-    
-    public void addGarment(Garment g){
+
+    public void addGarment(Garment g) {
         this.garmentList.add(g);
+    }
+
+    public List<PersonalizedGarmentCompatible> getPersonalizedGarmentCompatibleList() {
+        return personalizedGarmentCompatibleList;
+    }
+
+    public void setPersonalizedGarmentCompatibleList(List<PersonalizedGarmentCompatible> personalizedGarmentCompatibleList) {
+        this.personalizedGarmentCompatibleList = personalizedGarmentCompatibleList;
     }
 
 }

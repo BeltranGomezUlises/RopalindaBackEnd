@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelAddress extends Model<Address, Integer>{
-    
+public class ModelAddress extends Model<Address, Integer> {
+
     public ModelAddress() {
         super(Address.class);
     }
-    
+
 }

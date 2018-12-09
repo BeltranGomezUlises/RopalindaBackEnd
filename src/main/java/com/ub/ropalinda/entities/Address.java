@@ -256,5 +256,5 @@ public class Address extends IEntity<Integer> implements Serializable {
     public Integer objectPK() {
         return id;
     }
-    
+
 }

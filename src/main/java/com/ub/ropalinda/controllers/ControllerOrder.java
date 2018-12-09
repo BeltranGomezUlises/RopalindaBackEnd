@@ -28,9 +28,9 @@ import javax.ws.rs.Path;
  */
 @Path("/orders")
 public class ControllerOrder extends Controller<ModelOrder, PurchaseOrder, Integer> {
-    
+
     public ControllerOrder() {
         super(new ModelOrder());
     }
-    
+
 }

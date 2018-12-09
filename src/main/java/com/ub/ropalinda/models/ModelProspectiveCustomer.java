@@ -71,7 +71,7 @@ public class ModelProspectiveCustomer
                         + "ser cliente de Ropalinda, lo sentimos");
             }
         }
-        
+
         Customer customer = this.createEm().find(Customer.class, t.getMail());
         if (customer != null) {
             throw new InvalidValueException("Usted ya tiene una cuenta");
@@ -127,7 +127,7 @@ public class ModelProspectiveCustomer
             throw new InvalidValueException("No existe el cliente prospecto");
         }
         pc.setActive(false);
-        this.update(pc);        
+        this.update(pc);
     }
 
     public void accept(String email) throws InvalidValueException, UniqueException {
@@ -137,12 +137,12 @@ public class ModelProspectiveCustomer
         if (pc == null) {
             throw new InvalidValueException("No existe el cliente");
         }
-        Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);        
-                
+        Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);
+
         em.getTransaction().begin();
         em.persist(c);
-        em.remove(pc);                
-        em.getTransaction().commit();                                
+        em.remove(pc);
+        em.getTransaction().commit();
     }
 
 }

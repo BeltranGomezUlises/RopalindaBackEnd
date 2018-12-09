@@ -74,7 +74,7 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
-    private boolean active;    
+    private boolean active;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "category", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -125,7 +125,7 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
-    
+
     public Category getCategory() {
         return category;
     }
@@ -171,5 +171,5 @@ public class Subcategory extends IEntity<Integer> implements Serializable {
     public void setGarmentList(List<Garment> garmentList) {
         this.garmentList = garmentList;
     }
-    
+
 }

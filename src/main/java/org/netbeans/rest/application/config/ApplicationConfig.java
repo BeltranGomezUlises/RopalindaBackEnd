@@ -41,7 +41,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.ub.ropalinda.controllers.ControllerProspectiveCustomer.class);
         resources.add(com.ub.ropalinda.controllers.ControllerSubcategory.class);
         resources.add(com.ub.ropalinda.controllers.Utilerias.class);
-        resources.add(com.ub.ropalinda.utils.commons.Controller.class);
     }
 
 }

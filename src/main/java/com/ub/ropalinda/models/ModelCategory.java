@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author valle
  */
-public class ModelCategory extends Model<Category, Integer>{
-    
+public class ModelCategory extends Model<Category, Integer> {
+
     public ModelCategory() {
         super(Category.class);
     }
-    
+
 }

@@ -27,17 +27,15 @@ import javax.ws.rs.Path;
  * @author valle
  */
 @Path("/subcategories")
-public class ControllerSubcategory extends Controller<ModelSubcategory, Subcategory, Integer>{
-    
+public class ControllerSubcategory extends Controller<ModelSubcategory, Subcategory, Integer> {
+
     public ControllerSubcategory() {
         super(new ModelSubcategory());
-    }      
+    }
 
     @Override
     protected boolean findAllRequiresToken() {
         return false;
     }
-    
-    
-    
+
 }

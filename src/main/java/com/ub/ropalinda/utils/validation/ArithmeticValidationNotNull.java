@@ -8,10 +8,8 @@ package com.ub.ropalinda.utils.validation;
 import static com.ub.ropalinda.utils.validation.InvalidValueException.MESSAGE_INVALID_VALUE;
 import static com.ub.ropalinda.utils.validation.InvalidValueException.MESSAGE_NULL_VALUE;
 
-
 /**
- * Container for all the validation methods of arithmetic operators considering
- * null validation
+ * Container for all the validation methods of arithmetic operators considering null validation
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */

@@ -27,10 +27,10 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/compatibleGarments")
-public class ControllerCompatibleGarment extends Controller<ModelCompatibleGarment, CompatibleGarment, Integer>{
-    
+public class ControllerCompatibleGarment extends Controller<ModelCompatibleGarment, CompatibleGarment, Integer> {
+
     public ControllerCompatibleGarment() {
         super(new ModelCompatibleGarment());
     }
-    
+
 }

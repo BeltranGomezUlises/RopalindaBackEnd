@@ -125,5 +125,5 @@ public class Images extends IEntity<ImagesPK> implements Serializable {
     public ImagesPK objectPK() {
         return this.imagesPK;
     }
-    
+
 }

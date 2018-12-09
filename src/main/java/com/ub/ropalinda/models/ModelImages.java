@@ -26,9 +26,9 @@ import com.ub.ropalinda.utils.commons.Model;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 public class ModelImages extends Model<Images, ImagesPK> {
-    
+
     public ModelImages() {
         super(Images.class);
     }
-    
+
 }

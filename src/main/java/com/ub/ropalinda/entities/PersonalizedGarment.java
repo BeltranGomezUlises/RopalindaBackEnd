@@ -17,11 +17,10 @@
  */
 package com.ub.ropalinda.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +30,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -39,13 +39,12 @@ import javax.validation.constraints.NotNull;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Entity
-@Table(name = "order_detail_compatible")
+@Table(name = "personalized_garment")
 @NamedQueries({
-    @NamedQuery(name = "OrderDetailCompatible.findAll", query = "SELECT o FROM OrderDetailCompatible o")
-    , @NamedQuery(name = "OrderDetailCompatible.findById", query = "SELECT o FROM OrderDetailCompatible o WHERE o.id = :id")
-    , @NamedQuery(name = "OrderDetailCompatible.findByPrice", query = "SELECT o FROM OrderDetailCompatible o WHERE o.price = :price")
-    , @NamedQuery(name = "OrderDetailCompatible.findByActive", query = "SELECT o FROM OrderDetailCompatible o WHERE o.active = :active")})
-public class OrderDetailCompatible extends IEntity<Integer> implements Serializable {
+    @NamedQuery(name = "PersonalizedGarment.findAll", query = "SELECT p FROM PersonalizedGarment p")
+    , @NamedQuery(name = "PersonalizedGarment.findById", query = "SELECT p FROM PersonalizedGarment p WHERE p.id = :id")
+    , @NamedQuery(name = "PersonalizedGarment.findByActive", query = "SELECT p FROM PersonalizedGarment p WHERE p.active = :active")})
+public class PersonalizedGarment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,33 +52,28 @@ public class OrderDetailCompatible extends IEntity<Integer> implements Serializa
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "price")
-    private BigDecimal price;
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
     private boolean active;
-    @JoinColumn(name = "compatible_garment", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalizedGarment")
+    private List<PersonalizedGarmentCompatible> personalizedGarmentCompatibleList;
+    @JoinColumn(name = "customer", referencedColumnName = "mail")
     @ManyToOne(optional = false)
-    private CompatibleGarment compatibleGarment;
-    @JsonIgnore
-    @JoinColumn(name = "order_detail", referencedColumnName = "id")
+    private Customer customer;
+    @JoinColumn(name = "garment", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private OrderDetail orderDetail;
+    private Garment garment;
 
-    public OrderDetailCompatible() {
+    public PersonalizedGarment() {
     }
 
-    public OrderDetailCompatible(Integer id) {
+    public PersonalizedGarment(Integer id) {
         this.id = id;
     }
 
-    public OrderDetailCompatible(Integer id, BigDecimal price, boolean active) {
+    public PersonalizedGarment(Integer id, boolean active) {
         this.id = id;
-        this.price = price;
         this.active = active;
     }
 
@@ -91,14 +85,6 @@ public class OrderDetailCompatible extends IEntity<Integer> implements Serializa
         this.id = id;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public boolean getActive() {
         return active;
     }
@@ -107,20 +93,28 @@ public class OrderDetailCompatible extends IEntity<Integer> implements Serializa
         this.active = active;
     }
 
-    public CompatibleGarment getCompatibleGarment() {
-        return compatibleGarment;
+    public List<PersonalizedGarmentCompatible> getPersonalizedGarmentCompatibleList() {
+        return personalizedGarmentCompatibleList;
     }
 
-    public void setCompatibleGarment(CompatibleGarment compatibleGarment) {
-        this.compatibleGarment = compatibleGarment;
+    public void setPersonalizedGarmentCompatibleList(List<PersonalizedGarmentCompatible> personalizedGarmentCompatibleList) {
+        this.personalizedGarmentCompatibleList = personalizedGarmentCompatibleList;
     }
 
-    public OrderDetail getOrderDetail() {
-        return orderDetail;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setOrderDetail(OrderDetail orderDetail) {
-        this.orderDetail = orderDetail;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Garment getGarment() {
+        return garment;
+    }
+
+    public void setGarment(Garment garment) {
+        this.garment = garment;
     }
 
     @Override
@@ -133,10 +127,10 @@ public class OrderDetailCompatible extends IEntity<Integer> implements Serializa
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OrderDetailCompatible)) {
+        if (!(object instanceof PersonalizedGarment)) {
             return false;
         }
-        OrderDetailCompatible other = (OrderDetailCompatible) object;
+        PersonalizedGarment other = (PersonalizedGarment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -145,12 +139,7 @@ public class OrderDetailCompatible extends IEntity<Integer> implements Serializa
 
     @Override
     public String toString() {
-        return "com.ub.ropalinda.entities.OrderDetailCompatible[ id=" + id + " ]";
-    }
-
-    @Override
-    public Integer objectPK() {
-        return id;
+        return "com.ub.ropalinda.entities.PersonalizedGarment[ id=" + id + " ]";
     }
 
 }

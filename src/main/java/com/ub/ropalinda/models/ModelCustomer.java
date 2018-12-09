@@ -41,14 +41,14 @@ import org.apache.commons.mail.EmailException;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelCustomer extends Model<Customer, String>{
-    
+public class ModelCustomer extends Model<Customer, String> {
+
     public static final String LOGIN_FAIL_MESSAGE = "Usuario y/o contraseña inválido";
-    
+
     public ModelCustomer() {
-        super(Customer.class);        
+        super(Customer.class);
     }
-    
+
     /**
      * Creates the token for requesting to be a customer in ropalinda
      *
@@ -90,7 +90,7 @@ public class ModelCustomer extends Model<Customer, String>{
             throw new InvalidValueException("El código no es correcto");
         }
     }
-    
+
     public void accept(String email) throws InvalidValueException, UniqueException {
         UtilsValidation.isEmailAndNotNull(email);
         EntityManager em = this.createEm();
@@ -98,14 +98,14 @@ public class ModelCustomer extends Model<Customer, String>{
         if (pc == null) {
             throw new InvalidValueException("No existe el cliente prospecto");
         }
-        Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);        
-                
+        Customer c = new Customer(email, pc.getPass(), pc.getName(), pc.getFatherLastName(), pc.getMotherLastName(), pc.getPhone(), pc.getBirthday(), true);
+
         em.getTransaction().begin();
         em.persist(c);
-        em.remove(pc);                
-        em.getTransaction().commit();                                
+        em.remove(pc);
+        em.getTransaction().commit();
     }
-    
+
     public Map<String, Object> login(String mail, String pass) throws InvalidValueException {
         UtilsValidation.isEmptyAndNotNull(mail, "mail");
         UtilsValidation.isEmptyAndNotNull(pass, "pass");
@@ -124,5 +124,5 @@ public class ModelCustomer extends Model<Customer, String>{
         map.put("token", token);
         return map;
     }
-    
+
 }

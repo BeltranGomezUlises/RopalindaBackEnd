@@ -33,27 +33,27 @@ import javax.ws.rs.Path;
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
 @Path("/customers")
-public class ControllerCustomer extends Controller<ModelCustomer, Customer, String>{
-    
-    public ControllerCustomer() {        
+public class ControllerCustomer extends Controller<ModelCustomer, Customer, String> {
+
+    public ControllerCustomer() {
         super(new ModelCustomer());
     }
-    
+
     @Path("/login")
     @POST
     public Response<Map> login(Map<String, String> map) {
         Response<Map> res = new Response();
         try {
             String mail = map.get("mail");
-            String pass = map.get("pass");                        
-            Map<String, Object> data = this.model.login(mail, pass);            
-            res.setData(data);                        
+            String pass = map.get("pass");
+            Map<String, Object> data = this.model.login(mail, pass);
+            res.setData(data);
         } catch (InvalidValueException e) {
-            UtilsService.invalidParam(res, e, e.getMessage());        
+            UtilsService.invalidParam(res, e, e.getMessage());
         } catch (Exception e) {
             error(res, e);
         }
         return res;
     }
-    
+
 }

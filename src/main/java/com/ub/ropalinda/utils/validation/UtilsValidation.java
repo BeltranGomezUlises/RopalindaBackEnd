@@ -59,8 +59,7 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validates that the text contains special character and do not be empty,
-     * ignoring null
+     * Validates that the text contains special character and do not be empty, ignoring null
      *
      * @param s
      * @param propertyName name of the property to evaluate
@@ -83,8 +82,7 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validates that the text contains special character and do not be empty,
-     * considering not null
+     * Validates that the text contains special character and do not be empty, considering not null
      *
      * @param s
      * @param propertyName name of the property to evaluate
@@ -107,14 +105,12 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validate the value of the property in the object with the pattern given
-     * as regular expresion, includes null validation, ignoring null
+     * Validate the value of the property in the object with the pattern given as regular expresion, includes null validation, ignoring null
      *
      * @param pattern pattern to compile
      * @param object object to evaluate
      * @param propertyName name of the property to evaluate
-     * @throws utils.UtilsValidation.PropertyValueException if the evaluation
-     * fails
+     * @throws utils.UtilsValidation.PropertyValueException if the evaluation fails
      */
     private static void evaluate(final String pattern, String s,
             String propertyName) throws InvalidValueException {
@@ -131,8 +127,7 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validate the value of the property in the object with the pattern given
-     * as regular expresion, includes null validation
+     * Validate the value of the property in the object with the pattern given as regular expresion, includes null validation
      *
      * @param pattern pattern to compile
      * @param object object to evaluate
@@ -154,14 +149,12 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validate the value of the property in the object with the pattern given
-     * as regular expresion, includes null validation, ignoring null
+     * Validate the value of the property in the object with the pattern given as regular expresion, includes null validation, ignoring null
      *
      * @param pattern pattern to compile
      * @param object object to evaluate
      * @param propertyName name of the property to evaluate
-     * @throws utils.UtilsValidation.PropertyValueException if the evaluation
-     * fails
+     * @throws utils.UtilsValidation.PropertyValueException if the evaluation fails
      */
     private static void evaluate(final String pattern, String s)
             throws InvalidValueException {
@@ -178,8 +171,7 @@ public class UtilsValidation extends ArithmeticValidationNotNull {
     }
 
     /**
-     * Validate the value of the property in the object with the pattern given
-     * as regular expresion, includes null validation
+     * Validate the value of the property in the object with the pattern given as regular expresion, includes null validation
      *
      * @param pattern pattern to compile
      * @param object object to evaluate

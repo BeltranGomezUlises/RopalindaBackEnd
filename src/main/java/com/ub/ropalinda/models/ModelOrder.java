@@ -24,10 +24,10 @@ import com.ub.ropalinda.utils.commons.Model;
  *
  * @author Ulises Beltrán Gómez - beltrangomezulises@gmail.com
  */
-public class ModelOrder extends Model<PurchaseOrder, Integer>{
-    
+public class ModelOrder extends Model<PurchaseOrder, Integer> {
+
     public ModelOrder() {
         super(PurchaseOrder.class);
     }
-    
+
 }

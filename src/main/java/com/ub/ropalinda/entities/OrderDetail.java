@@ -69,7 +69,7 @@ public class OrderDetail extends IEntity<Integer> implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "active")
-    private boolean active;    
+    private boolean active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderDetail")
     private List<OrderDetailCompatible> orderDetailCompatibleList;
     @JoinColumn(name = "garment", referencedColumnName = "id")
@@ -179,5 +179,5 @@ public class OrderDetail extends IEntity<Integer> implements Serializable {
     public Integer objectPK() {
         return this.id;
     }
-    
+
 }

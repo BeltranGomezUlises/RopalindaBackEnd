@@ -93,5 +93,5 @@ public class ImagesPK implements Serializable {
     public String toString() {
         return "com.ub.ropalinda.entities.ImagesPK[ garment=" + garment + ", imagePath=" + imagePath + " ]";
     }
-    
+
 }

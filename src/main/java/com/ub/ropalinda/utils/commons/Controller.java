@@ -32,7 +32,7 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
 
     protected M model;
 
-    public Controller(M model) {        
+    public Controller(M model) {
         this.model = model;
     }
 

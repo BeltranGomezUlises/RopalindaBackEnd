@@ -117,7 +117,7 @@ public class UtilsMail {
         // send the email
         email.send();
     }
-    
+
     public static void sendRecoverPassCode(String hostMail, int port, String mail,
             String pass, String from, String toMail, String codigoRecuperacion)
             throws EmailException, MalformedURLException {
@@ -219,7 +219,7 @@ public class UtilsMail {
             this.pros = pros;
             this.code = code;
         }
-        
+
         public ModelSendActivationCode(Customer cus, String code) {
             this.cus = cus;
             this.code = code;
@@ -232,7 +232,7 @@ public class UtilsMail {
         public void setPros(ProspectiveCustomer pros) {
             this.pros = pros;
         }
-        
+
         public Customer getCus() {
             return cus;
         }
