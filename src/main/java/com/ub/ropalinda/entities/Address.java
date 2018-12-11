@@ -18,6 +18,7 @@
 package com.ub.ropalinda.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import java.util.List;
@@ -104,7 +105,7 @@ public class Address extends IEntity<Integer> implements Serializable {
     @NotNull
     @Column(name = "active")
     private boolean active;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "customer", referencedColumnName = "mail")
     @ManyToOne(optional = false)
     private Customer customer;

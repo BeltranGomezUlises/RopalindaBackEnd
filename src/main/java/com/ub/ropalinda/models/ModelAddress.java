@@ -18,7 +18,11 @@
 package com.ub.ropalinda.models;
 
 import com.ub.ropalinda.entities.Address;
+import com.ub.ropalinda.entities.Customer;
 import com.ub.ropalinda.utils.commons.Model;
+import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -29,5 +33,16 @@ public class ModelAddress extends Model<Address, Integer> {
     public ModelAddress() {
         super(Address.class);
     }
+
+    @Override
+    public Address persist(Address t) throws UniqueException, InvalidValueException {
+        EntityManager em = this.createEm();
+        t.setCustomer(em.find(Customer.class, t.getCustomer().getMail()));
+        Address ad = super.persist(t); //To change body of generated methods, choose Tools | Templates.
+        em.close();
+        return ad;
+    }
+    
+    
 
 }
