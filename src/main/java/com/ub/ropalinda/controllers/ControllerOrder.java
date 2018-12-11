@@ -19,7 +19,17 @@ package com.ub.ropalinda.controllers;
 
 import com.ub.ropalinda.entities.PurchaseOrder;
 import com.ub.ropalinda.models.ModelOrder;
+import com.ub.ropalinda.models.PersistOrder;
+import com.ub.ropalinda.utils.UtilsJWT;
+import static com.ub.ropalinda.utils.UtilsService.error;
+import static com.ub.ropalinda.utils.UtilsService.invalidToken;
+import static com.ub.ropalinda.utils.UtilsService.warning;
 import com.ub.ropalinda.utils.commons.Controller;
+import com.ub.ropalinda.utils.commons.reponses.AccessDeniedException;
+import com.ub.ropalinda.utils.commons.reponses.Response;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 /**
@@ -33,4 +43,20 @@ public class ControllerOrder extends Controller<ModelOrder, PurchaseOrder, Integ
         super(new ModelOrder());
     }
 
+    @POST
+    @Path("/persist")
+    public Response persistOrder(@HeaderParam("Authorization") String token, PersistOrder persistOrder){
+        Response r = new Response();
+        try {
+            UtilsJWT.validate(token);                        
+            r.setData(this.model.persistOrder(persistOrder));
+        } catch (AccessDeniedException e) {
+            invalidToken(r);
+        } catch (InvalidValueException e) {
+            warning(r, e.getMessage(), e.getMessage());
+        } catch (Exception e) {
+            error(r, e);
+        }        
+        return r;
+    }
 }

@@ -23,9 +23,13 @@ import com.ub.ropalinda.entities.Customer;
 import com.ub.ropalinda.entities.Garment;
 import com.ub.ropalinda.entities.OrderDetail;
 import com.ub.ropalinda.entities.OrderDetailCompatible;
+import com.ub.ropalinda.entities.Payment;
 import com.ub.ropalinda.entities.PurchaseOrder;
+import com.ub.ropalinda.utils.DeliveryService;
 import com.ub.ropalinda.utils.commons.Model;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -40,7 +44,7 @@ public class ModelOrder extends Model<PurchaseOrder, Integer> {
         super(PurchaseOrder.class);
     }
 
-    public PurchaseOrder persistOrder(PersistOrder po) {
+    public PurchaseOrder persistOrder(PersistOrder po) throws InvalidValueException {
         EntityManager em = this.createEm();
 
         em.getTransaction().begin();
@@ -57,11 +61,21 @@ public class ModelOrder extends Model<PurchaseOrder, Integer> {
         order.setAddress(em.find(Address.class, po.getCustomerAddressId()));
         order.setCustomer(em.find(Customer.class, po.getCustomerMail()));
         order.setOrderDate(new Date());
-        order.setDeliveryDate(deliveryDateService());
 
+        PaymentMethodBuilder.PaymentMethod paymentMethod = PaymentMethodBuilder
+                .build(po.getPaymentType(), po.getPaymentData());
+        try {
+            paymentMethod.validate();
+        } catch (InvalidValueException e) {
+            em.getTransaction().rollback();
+            em.close();
+            throw e;
+        }
+
+        order.setDeliveryDate(DeliveryService.deliveryDate(po.getLines().size()));
         em.persist(order);
         em.flush();
-        
+
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (PersistOrder.OrderLine l : po.getLines()) {
             OrderDetail d = new OrderDetail();
@@ -69,39 +83,45 @@ public class ModelOrder extends Model<PurchaseOrder, Integer> {
             d.setGarment(g);
             d.setQuantity(l.getQuantity());
             d.setPrice(g.getPrice());
-            d.setPurchaseOrder(order);            
-            
+            d.setPurchaseOrder(order);
+
             em.persist(d);
             em.flush();
-            
+
             List<OrderDetailCompatible> detailCompatibles = new ArrayList<>();
-            for (Integer compatibleId : l.getCompatibleIds()) {                
+            for (Integer compatibleId : l.getCompatibleIds()) {
                 OrderDetailCompatible odc = new OrderDetailCompatible();
                 CompatibleGarment cg = em.find(CompatibleGarment.class, compatibleId);
                 odc.setCompatibleGarment(cg);
                 odc.setActive(true);
                 odc.setPrice(cg.getPrice());
                 odc.setOrderDetail(d);
-                
+
                 em.persist(odc);
                 em.flush();
-                
+
                 detailCompatibles.add(odc);
             }
             d.setOrderDetailCompatibleList(detailCompatibles);
             orderDetails.add(d);
         }
         order.setOrderDetailList(orderDetails);
-        
+
+        //after setting all garments and compatibles
+        if (paymentMethod.getReference() != null) {
+            Payment p = new Payment(paymentMethod.getReference());
+            p.setActive(true);
+            p.setAmount(order.totalAmount());
+            p.setPurchaseOrder(order);
+            em.persist(p);
+            order.setPaymentList(new ArrayList<>(Arrays.asList(p)));
+        }
+
         em.merge(order);
         em.getTransaction().commit();
         em.close();
 
         return order;
-    }
-
-    public Date deliveryDateService() {
-        return new Date();
     }
 
 }

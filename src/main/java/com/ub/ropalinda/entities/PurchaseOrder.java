@@ -19,6 +19,7 @@ package com.ub.ropalinda.entities;
 
 import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -186,6 +187,18 @@ public class PurchaseOrder extends IEntity<Integer> implements Serializable {
     @Override
     public Integer objectPK() {
         return folio;
+    }
+
+    public BigDecimal totalAmount() {
+        BigDecimal amount = new BigDecimal(0);
+        for (OrderDetail orderDetail : orderDetailList) {
+            BigDecimal lineAmount = orderDetail.getPrice();
+            for (OrderDetailCompatible orderDetailCompatible : orderDetail.getOrderDetailCompatibleList()) {
+                lineAmount = lineAmount.add(orderDetailCompatible.getPrice());
+            }
+            amount = amount.add(lineAmount.multiply(new BigDecimal(orderDetail.getQuantity())));
+        }
+        return amount;
     }
 
 }

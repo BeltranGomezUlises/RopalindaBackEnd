@@ -27,16 +27,19 @@ public class PersistOrder {
 
     private String customerMail;
     private int customerAddressId;
-    private String paymentMethod;
+    /**
+     * 0 = deposit, 1 = card
+     */
+    private byte paymentType;
     private String paymentData;
     private List<OrderLine> lines;
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public byte getPaymentType() {
+        return paymentType;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPaymentType(byte paymentType) {
+        this.paymentType = paymentType;
     }
 
     public String getPaymentData() {
@@ -102,5 +105,4 @@ public class PersistOrder {
         }
 
     }
-
 }
