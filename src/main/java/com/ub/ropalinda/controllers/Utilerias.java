@@ -73,7 +73,7 @@ public class Utilerias {
             @FormDataParam("file") FormDataContentDisposition fileDetail) {
         Response<String> r = new Response();
         try {
-            String fileName = System.currentTimeMillis() + fileDetail.getFileName();
+            String fileName = System.currentTimeMillis() + fileDetail.getFileName().replace(" ", "_");
             String uploadedFileLocation = FOLDER_PATH_TO_UPLOAD + fileName;
             writeToFile(uploadedInputStream, uploadedFileLocation);
             String output = "File uploaded to : " + uploadedFileLocation;

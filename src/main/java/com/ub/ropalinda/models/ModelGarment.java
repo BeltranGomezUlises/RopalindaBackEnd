@@ -22,6 +22,7 @@ import com.ub.ropalinda.entities.Garment;
 import com.ub.ropalinda.entities.Subcategory;
 import com.ub.ropalinda.utils.commons.Model;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 import javax.persistence.EntityManager;
 
 /**
@@ -35,7 +36,7 @@ public class ModelGarment extends Model<Garment, Integer> {
     }
 
     @Override
-    public Garment persist(Garment t) throws UniqueException {
+    public Garment persist(Garment t) throws UniqueException, InvalidValueException {
         EntityManager em = this.createEm();
         Subcategory subCat = em.find(Subcategory.class, t.getSubcategory().getId());
         t.setSubcategory(subCat);

@@ -59,13 +59,21 @@ public class ModelEmployee extends Model<Employee, String> {
     }
 
     @Override
-    public Employee persist(Employee t) throws UniqueException {
-        
-        
-        
+    public Employee persist(Employee t) throws UniqueException, InvalidValueException {
+        UtilsValidation.isPhoneAndNotNull(t.getPhone(), "teléfono");
+        UtilsValidation.isEmailAndNotNull(t.getMail(), "correo");
+                
+        t.setPass(UtilsSecurity.encodeSHA256(t.getPass()));        
         return super.persist(t); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Employee t) throws UniqueException, InvalidValueException{
+        Employee emp = this.findById(t.getMail());
+        t.setPass(emp.getPass());
+        super.update(t); //To change body of generated methods, choose Tools | Templates.
     }
     
     
-
+    
 }

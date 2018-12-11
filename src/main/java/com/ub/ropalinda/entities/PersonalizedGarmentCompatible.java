@@ -17,6 +17,8 @@
  */
 package com.ub.ropalinda.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ub.ropalinda.utils.commons.IEntity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -41,7 +43,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "PersonalizedGarmentCompatible.findAll", query = "SELECT p FROM PersonalizedGarmentCompatible p")
     , @NamedQuery(name = "PersonalizedGarmentCompatible.findById", query = "SELECT p FROM PersonalizedGarmentCompatible p WHERE p.id = :id")
     , @NamedQuery(name = "PersonalizedGarmentCompatible.findByActive", query = "SELECT p FROM PersonalizedGarmentCompatible p WHERE p.active = :active")})
-public class PersonalizedGarmentCompatible implements Serializable {
+public class PersonalizedGarmentCompatible extends IEntity<Integer> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +58,7 @@ public class PersonalizedGarmentCompatible implements Serializable {
     @JoinColumn(name = "compatible_garment", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CompatibleGarment compatibleGarment;
+    @JsonIgnore
     @JoinColumn(name = "personalized_garment", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private PersonalizedGarment personalizedGarment;
@@ -127,6 +130,11 @@ public class PersonalizedGarmentCompatible implements Serializable {
     @Override
     public String toString() {
         return "com.ub.ropalinda.entities.PersonalizedGarmentCompatible[ id=" + id + " ]";
+    }
+
+    @Override
+    public Integer objectPK() {
+        return id;
     }
 
 }

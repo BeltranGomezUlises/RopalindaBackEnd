@@ -21,6 +21,7 @@ import com.ub.ropalinda.entities.Category;
 import com.ub.ropalinda.entities.Subcategory;
 import com.ub.ropalinda.utils.commons.Model;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 
 /**
  *
@@ -33,7 +34,7 @@ public class ModelSubcategory extends Model<Subcategory, Integer> {
     }
 
     @Override
-    public Subcategory persist(Subcategory t) throws UniqueException {
+    public Subcategory persist(Subcategory t) throws UniqueException, InvalidValueException {
         Category cat = this.createEm().find(Category.class, t.getCategory().getId());
         t.setCategory(cat);
         return super.persist(t);

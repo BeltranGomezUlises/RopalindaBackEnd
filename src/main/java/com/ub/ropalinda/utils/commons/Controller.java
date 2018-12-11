@@ -5,6 +5,7 @@ import static com.ub.ropalinda.utils.UtilsService.*;
 import com.ub.ropalinda.utils.commons.reponses.AccessDeniedException;
 import com.ub.ropalinda.utils.commons.reponses.Response;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -40,16 +41,17 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
     public Response<List> findAll(@HeaderParam("Authorization") String token,
             @QueryParam("select") String select,
             @QueryParam("from") Integer from,
-            @QueryParam("to") Integer to) {
+            @QueryParam("to") Integer to,
+            @QueryParam("orderBy") String orderBy) {
         Response res = new Response();
         try {
             if (this.findAllRequiresToken()) {
                 UtilsJWT.validate(token);
-            }
+            }                        
             if (select != null) {
-                res.setData(this.model.findAll(select, from, to));
+                res.setData(this.model.findAll(select, orderBy, from, to));
             } else {
-                res.setData(this.model.findAll(from, to));
+                res.setData(this.model.findAll(orderBy, from, to));
             }
         } catch (AccessDeniedException e) {
             invalidToken(res);
@@ -88,6 +90,8 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
             invalidToken(res);
         } catch (UniqueException e) {
             unique(res, e);
+        } catch (InvalidValueException e) {
+            invalidParam(res, e);
         } catch (Exception e) {
             error(res, e);
         }
@@ -106,7 +110,9 @@ public class Controller<M extends Model<T, K>, T extends IEntity<K>, K> {
             invalidToken(res);
         } catch (UniqueException e) {
             unique(res, e);
-        } catch (Exception e) {
+        } catch (InvalidValueException e) {
+            invalidParam(res, e);
+        }catch (Exception e) {
             error(res, e);
         }
         return res;

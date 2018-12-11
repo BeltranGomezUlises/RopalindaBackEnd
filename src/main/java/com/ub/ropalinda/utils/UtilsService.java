@@ -66,7 +66,7 @@ public class UtilsService {
     public static final void invalidParam(Response res, InvalidValueException e) {
         res.setStatus(Status.INVALID_PARAM);
         if (e.getPropertyName() != null) {
-            res.setMessage(e.getMessage() + ": " + e.getPropertyName());
+            res.setMessage("Propiedad " + e.getPropertyName() + " es inválido");
         } else {
             res.setMessage(e.getMessage());
         }

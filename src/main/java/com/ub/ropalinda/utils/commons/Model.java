@@ -2,6 +2,7 @@ package com.ub.ropalinda.utils.commons;
 
 import com.ub.ropalinda.utils.UtilsDB;
 import com.ub.ropalinda.utils.commons.reponses.UniqueException;
+import com.ub.ropalinda.utils.validation.InvalidValueException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 /**
@@ -32,17 +34,38 @@ public class Model<T extends IEntity<K>, K> {
     /**
      * Find all the entities of this model
      *
+     * @param orderBy string with the filds of order by, ej: id|desc,name|asc
      * @param from index to start pagination
      * @param to index to end pagination
      * @return list with entities of this model
      */
-    public List<T> findAll(Integer from, Integer to) {
+    public List<T> findAll(String orderBy, Integer from, Integer to) {
         EntityManager em = UtilsDB.getEMFactoryCG().createEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<T> root = cq.from(clazz);
-            cq.select(root).where(cb.equal(root.get("active"), true));
+            cq.select(root);
+            cq.where(cb.equal(root.get("active"), true));
+            if (orderBy != null && !orderBy.isEmpty()) {
+                List<Order> orders = new ArrayList<>();
+                String[] orderParts = orderBy.split(",");
+                for (String orderPart : orderParts) {
+                    String[] fieldAndWay = orderPart.split("\\|");
+                    String field = fieldAndWay[0];
+                    String way = null;
+                    if (fieldAndWay.length > 1) {
+                        way = fieldAndWay[1];
+                    }
+                    if (way != null && way.equalsIgnoreCase("desc")) {
+                        orders.add(cb.desc(root.get(field)));
+                        continue;
+                    }
+                    orders.add(cb.asc(root.get(field)));
+                }
+                cq.orderBy(orders);
+            }
+
             Query q = em.createQuery(cq);
             paginateQuery(q, from, to);
             return q.getResultList();
@@ -57,13 +80,14 @@ public class Model<T extends IEntity<K>, K> {
      * Find all the entities of this model filtered and related with the params in queryParam
      *
      * @param select the query param from the uri
+     * @param orderBy string with the filds of order by, ej: id|desc,name|asc
      * @param from index to start pagination
      * @param to index to end pagination
      * @return list of mapped properties
      */
-    public List<Map<String, Object>> findAll(String select, Integer from, Integer to) {
+    public List<Map<String, Object>> findAll(String select, String orderBy, Integer from, Integer to) {
         try {
-            return queryParamResponse(select, from, to);
+            return queryParamResponse(select, orderBy, from, to);
         } catch (Exception e) {
             throw e;
         }
@@ -85,8 +109,9 @@ public class Model<T extends IEntity<K>, K> {
      * @param t entity to persist
      * @return the entity persisted
      * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a unique key is violated
+     * @throws com.ub.ropalinda.utils.validation.InvalidValueException if some validation is no passed
      */
-    public T persist(T t) throws UniqueException {
+    public T persist(T t) throws UniqueException, InvalidValueException {
         EntityManager em = this.createEm();
         try {
             em.getTransaction().begin();
@@ -112,19 +137,19 @@ public class Model<T extends IEntity<K>, K> {
      * @param t entity to update
      * @throws com.ub.ropalinda.utils.commons.reponses.UniqueException if a unique key is violated
      */
-    public void update(T t) throws UniqueException {
+    public void update(T t) throws UniqueException, InvalidValueException {
         EntityManager em = this.createEm();
         try {
             em.getTransaction().begin();
             em.merge(t); //merge in the persistence context
             em.getTransaction().commit();
         } catch (Exception e) {
-//            String exMessage = e.getMessage();
-//            if (exMessage.contains("Ya existe la llave")) {
-//                throw this.uniqueException(exMessage);
-//            } else {
-            throw e;
-//            }
+            String exMessage = e.getMessage();
+            if (exMessage.contains("Ya existe la llave")) {
+                throw this.uniqueException(exMessage);
+            } else {
+                throw e;
+            }
         } finally {
             em.close();
         }
@@ -194,13 +219,14 @@ public class Model<T extends IEntity<K>, K> {
      * @param to pagination index to
      * @return result set mapped with properties names
      */
-    protected List<Map<String, Object>> queryParamResponse(String select, Integer from, Integer to) {
+    protected List<Map<String, Object>> queryParamResponse(String select, String orderBy, Integer from, Integer to) {
         String entityName = this.clazz.getSimpleName();
         String queryToExcecute = "SELECT ";
         String queryFrom = " From " + entityName + " t";
         Set<String> querySelects = new LinkedHashSet<>();
         Set<String> queryWheres = new LinkedHashSet<>();
         Set<String> queryFroms = new LinkedHashSet<>();
+        Set<String> queryOrder = new LinkedHashSet<>();
         String[] querySelections = select.split(",");
         for (String selection : querySelections) {
             String whereSelection = whereSelection(selection);
@@ -231,7 +257,26 @@ public class Model<T extends IEntity<K>, K> {
         if (!queryWheres.isEmpty()) {
             queryToExcecute += " WHERE " + String.join(" AND ", queryWheres);
         }
-        Query query = this.createEm().createQuery(queryToExcecute);
+
+        if (orderBy != null && !orderBy.isEmpty()) {
+            String[] orderParts = orderBy.split(",");
+            for (String orderPart : orderParts) {
+                String[] fieldAndWay = orderPart.split("\\|");
+                String field = fieldAndWay[0];
+                String way = "asc";
+                if (fieldAndWay.length > 1) {
+                    way = fieldAndWay[1];
+                }
+                queryOrder.add("t." + field + " " + way);
+            }
+        }
+
+        if (!queryOrder.isEmpty()) {
+            queryToExcecute += " ORDER BY " + String.join(" , ", queryOrder);
+        }
+
+        EntityManager em = this.createEm();
+        Query query = em.createQuery(queryToExcecute);
         paginateQuery(query, from, to);
 
         //mapping to the list of object array into maps with the properties requested
@@ -253,6 +298,7 @@ public class Model<T extends IEntity<K>, K> {
             index = 0;
             mappedResults.add(mappedResult);
         }
+        em.close();
         return mappedResults;
     }
 
